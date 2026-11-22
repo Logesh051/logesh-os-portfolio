@@ -1,0 +1,421 @@
+/* SnakeApp.css — Authentic Windows 98/2000 Retro Arcade Snake */
+
+.snake-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  pointer-events: none;
+  z-index: 8500;
+}
+
+.snake-window {
+  position: absolute;
+  background: var(--win-bg, #c0c0c0);
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.snake-window--maximized {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: calc(100vh - 28px) !important;
+}
+
+.snake-window--minimized {
+  display: none !important;
+}
+
+@media (max-width: 600px) {
+  .snake-window:not(.snake-window--maximized) {
+    max-width: calc(100vw - 8px) !important;
+  }
+}
+
+/* 1. Title Bar */
+.snake-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px;
+  background: var(--win-titlebar, #000080);
+  color: #ffffff;
+  height: 22px;
+  cursor: default;
+  flex-shrink: 0;
+}
+
+.snake-titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.snake-title {
+  font-weight: bold;
+  font-size: 11px;
+}
+
+.snake-titlebar-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.snake-control-btn {
+  width: 16px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #c0c0c0;
+  cursor: pointer;
+  padding: 0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  color: #000000;
+  font-size: 9px;
+  font-weight: bold;
+}
+
+.snake-control-btn:active {
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 1px 0 0 1px;
+}
+
+/* 2. Menu Bar */
+.snake-menubar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 4px;
+  background: #c0c0c0;
+  border-bottom: 1px solid #808080;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.snake-menu-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 2px 6px;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.snake-menu-btn:hover {
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  background: #d4d0c8;
+}
+
+/* 3. Toolbar & Score Header */
+.snake-score-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: #c0c0c0;
+  border-bottom: 1px solid #808080;
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+.snake-lcd-panel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.snake-lcd-display {
+  background: #000000;
+  color: #00ff00;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-top: 1px solid #404040;
+  border-left: 1px solid #404040;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  min-width: 44px;
+  text-align: right;
+  letter-spacing: 1px;
+}
+
+.snake-btn-action {
+  padding: 3px 10px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  font-family: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.snake-btn-action:active {
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 4px 9px 2px 11px;
+}
+
+/* 4. Main Body: Game & Leaderboard Tabs */
+.snake-main-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  gap: 8px;
+  overflow-y: auto;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 0;
+}
+
+.snake-tab-bar {
+  display: flex;
+  gap: 2px;
+  width: 100%;
+  max-width: 420px;
+  border-bottom: 1px solid #ffffff;
+}
+
+.snake-tab {
+  padding: 3px 10px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #000000;
+  border-bottom: none;
+  font-size: 11px;
+  cursor: pointer;
+  outline: none;
+}
+
+.snake-tab--active {
+  background: #ffffff;
+  font-weight: bold;
+  border-bottom: 1px solid #ffffff;
+  margin-bottom: -1px;
+}
+
+/* 5. Canvas Container */
+.snake-board-frame {
+  position: relative;
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-bottom: 2px solid #ffffff;
+  border-right: 2px solid #ffffff;
+  background: #0a140a;
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.snake-canvas {
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Game Overlay inside Board */
+.snake-board-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 20, 10, 0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  text-align: center;
+  gap: 10px;
+}
+
+.snake-overlay-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #00ff00;
+  font-family: "Courier New", Courier, monospace;
+  text-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
+  margin: 0;
+}
+
+.snake-overlay-score {
+  font-size: 13px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.snake-name-input {
+  border: 1px solid #000000;
+  padding: 4px 8px;
+  font-family: inherit;
+  font-size: 11px;
+  width: 140px;
+  text-align: center;
+  outline: none;
+  background: #ffffff;
+}
+
+.snake-submit-status {
+  font-size: 10px;
+  color: #ffff00;
+  min-height: 14px;
+}
+
+/* 6. Mobile Touch Controls (D-Pad) */
+.snake-touch-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.snake-dpad-row {
+  display: flex;
+  gap: 6px;
+}
+
+.snake-dpad-btn {
+  width: 44px;
+  height: 38px;
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  color: #000080;
+}
+
+.snake-dpad-btn:active {
+  border-top: 2px solid #000000;
+  border-left: 2px solid #000000;
+  border-bottom: 2px solid #ffffff;
+  border-right: 2px solid #ffffff;
+  padding: 2px 0 0 2px;
+}
+
+/* 7. Leaderboard Tab Content */
+.snake-leaderboard-panel {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 8px;
+  min-height: 240px;
+  overflow-y: auto;
+}
+
+.snake-lb-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.snake-lb-table th {
+  background: #c0c0c0;
+  padding: 3px 6px;
+  border: 1px solid #808080;
+  text-align: left;
+  font-weight: bold;
+}
+
+.snake-lb-table td {
+  padding: 4px 6px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.snake-lb-rank {
+  font-weight: bold;
+  width: 30px;
+  color: #000080;
+}
+
+.snake-lb-score {
+  text-align: right;
+  font-weight: bold;
+  color: #008000;
+  width: 60px;
+}
+
+/* 8. Status Bar */
+.snake-statusbar {
+  display: flex;
+  align-items: center;
+  background: #c0c0c0;
+  border-top: 1px solid #808080;
+  padding: 2px 4px;
+  font-size: 11px;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.snake-status-cell {
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 2px 6px;
+  background: #c0c0c0;
+}
+
+.snake-status-cell--main {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.snake-status-cell--player {
+  font-weight: bold;
+  color: #000080;
+}

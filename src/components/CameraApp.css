@@ -1,0 +1,818 @@
+/* CameraApp.css — Authentic Windows 98 / 2000 Retro Photo Booth */
+
+.camera-window {
+  box-sizing: border-box;
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  user-select: none;
+}
+
+.camera-window--active {
+  z-index: 5020;
+}
+
+.camera-window--inactive {
+  z-index: 5005;
+}
+
+.camera-window--active .camera-titlebar {
+  background: var(--win-titlebar, #000080);
+  color: var(--win-titlebar-text, #ffffff);
+}
+
+.camera-window--inactive .camera-titlebar {
+  background: #808080;
+  color: #d4d0c8;
+}
+
+.camera-window--maximized {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* 1. Title Bar */
+.camera-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px;
+  height: 24px;
+  flex-shrink: 0;
+  cursor: move;
+  position: relative;
+  border-bottom: 1px solid #808080;
+}
+
+.camera-titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.camera-titlebar-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 1px;
+}
+
+.camera-title {
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.2px;
+}
+
+.camera-titlebar-controls {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.camera-control-btn {
+  width: 16px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #c0c0c0;
+  cursor: pointer;
+  padding: 0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  outline: none;
+}
+
+.camera-control-btn--close {
+  margin-left: 2px;
+}
+
+.camera-control-btn:active {
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 1px 0 0 1px;
+}
+
+/* 2. Menu Bar */
+.camera-menubar {
+  display: flex;
+  align-items: center;
+  background: #c0c0c0;
+  padding: 1px 2px;
+  border-bottom: 1px solid #808080;
+  flex-shrink: 0;
+}
+
+.camera-menu-item {
+  position: relative;
+}
+
+.camera-menu-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 2px 6px;
+  font-family: inherit;
+  font-size: 11px;
+  color: #000000;
+  cursor: pointer;
+  outline: none;
+}
+
+.camera-menu-btn:hover,
+.camera-menu-btn--active {
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  background: #d4d0c8;
+}
+
+.camera-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  min-width: 190px;
+  z-index: 1000;
+  padding: 2px 0;
+}
+
+.camera-dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 3px 12px 3px 6px;
+  font-size: 11px;
+  cursor: pointer;
+  color: #000000;
+  white-space: nowrap;
+}
+
+.camera-dropdown-item:hover:not(.camera-dropdown-item--disabled) {
+  background: #000080;
+  color: #ffffff;
+}
+
+.camera-dropdown-item--disabled {
+  color: #808080;
+  cursor: default;
+}
+
+.camera-dropdown-check {
+  width: 14px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.camera-dropdown-shortcut {
+  margin-left: auto;
+  padding-left: 16px;
+  font-size: 10px;
+  color: #606060;
+}
+
+.camera-dropdown-item:hover:not(.camera-dropdown-item--disabled) .camera-dropdown-shortcut {
+  color: #dfdfdf;
+}
+
+.camera-dropdown-separator {
+  height: 1px;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  margin: 3px 2px;
+}
+
+/* 3. Main Application Body */
+.camera-body {
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+  gap: 10px;
+  background: #c0c0c0;
+  align-items: stretch;
+}
+
+/* 3.1 Viewfinder Pane */
+.camera-viewfinder-pane {
+  flex: 1.35;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.camera-screen {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #000000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1); /* Natural selfie mirror view */
+  display: block;
+}
+
+.camera-video--hidden {
+  display: none;
+}
+
+.camera-captured-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* VHS Scanlines */
+.camera-scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.35) 3px,
+    rgba(0, 0, 0, 0.35) 4px
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Authentic REC Indicator */
+.camera-rec-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 2px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  z-index: 6;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.camera-rec-dot {
+  width: 7px;
+  height: 7px;
+  background: #ff0000;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #ff0000;
+  animation: camera-rec-blink 1.2s infinite ease-in-out;
+}
+
+.camera-rec-text {
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.8px;
+}
+
+@keyframes camera-rec-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+/* Flash Screen */
+.camera-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ffffff;
+  z-index: 15;
+  pointer-events: none;
+  animation: camera-flash-fade 140ms ease-out forwards;
+}
+
+@keyframes camera-flash-fade {
+  0% { opacity: 0.95; }
+  100% { opacity: 0; }
+}
+
+/* Countdown Overlay */
+.camera-countdown {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 72px;
+  font-weight: bold;
+  color: #ffff00;
+  text-shadow: 3px 3px 0 #000000, -2px -2px 0 #000000, 2px -2px 0 #000000, -2px 2px 0 #000000;
+  z-index: 10;
+  pointer-events: none;
+  animation: camera-pulse 0.9s ease-out;
+}
+
+@keyframes camera-pulse {
+  0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.3; }
+  50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; }
+}
+
+/* Demo Pattern Screen */
+.camera-demo-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.camera-demo-bars {
+  flex: 1;
+  display: flex;
+  width: 100%;
+}
+
+.camera-demo-bars div {
+  flex: 1;
+  height: 100%;
+}
+
+.camera-demo-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #000000;
+  color: #ffff00;
+  font-weight: bold;
+  font-size: 11px;
+  padding: 4px 8px;
+  border: 1px solid #ffffff;
+  letter-spacing: 1px;
+}
+
+/* Error View */
+.camera-error-view {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  color: #ffffff;
+  width: 100%;
+  height: 100%;
+  background: #111111;
+}
+
+.camera-error-box {
+  background: #c0c0c0;
+  color: #000000;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 90%;
+  text-align: left;
+}
+
+.camera-error-icon {
+  font-size: 24px;
+}
+
+.camera-error-text strong {
+  display: block;
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+
+.camera-error-text p {
+  font-size: 10px;
+  color: #333333;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.camera-error-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Viewfinder Caption */
+.camera-viewfinder-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 2px 0;
+  font-size: 10px;
+  color: #222222;
+}
+
+.camera-viewfinder-status-text {
+  font-weight: bold;
+  letter-spacing: 0.1px;
+}
+
+.camera-format-tag {
+  font-family: monospace;
+  color: #444444;
+}
+
+/* 3.2 Controls Pane */
+.camera-controls-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 235px;
+}
+
+.camera-groupbox {
+  border: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 4px 6px 6px;
+  background: #c0c0c0;
+}
+
+.camera-legend {
+  font-size: 11px;
+  font-weight: bold;
+  color: #000000;
+  padding: 0 4px;
+}
+
+/* Status Indicator */
+.camera-status-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.camera-led {
+  width: 10px;
+  height: 10px;
+  border: 1px solid #000000;
+  box-shadow: inset 1px 1px 0 #ffffff;
+}
+
+.camera-led--active {
+  background: #00ff00;
+  box-shadow: 0 0 4px #00ff00;
+}
+
+.camera-led--captured {
+  background: #0088ff;
+  box-shadow: 0 0 4px #0088ff;
+}
+
+.camera-led--demo {
+  background: #ffff00;
+  box-shadow: 0 0 4px #ffff00;
+}
+
+.camera-led--error {
+  background: #ff0000;
+  box-shadow: 0 0 4px #ff0000;
+}
+
+.camera-status-label {
+  font-weight: bold;
+  font-size: 11px;
+}
+
+/* Filters List */
+.camera-filter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.camera-filter-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 4px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  user-select: none;
+}
+
+.camera-filter-option:hover:not(.camera-filter-option--selected) {
+  background: #d4d0c8;
+}
+
+.camera-filter-option--selected {
+  background: #000080;
+  color: #ffffff;
+}
+
+.camera-filter-option input[type="radio"] {
+  margin: 0;
+  accent-color: #000080;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.camera-filter-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  min-width: 0;
+}
+
+.camera-filter-name {
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.camera-filter-tagline {
+  font-size: 10px;
+  opacity: 0.85;
+}
+
+.camera-filter-option--selected .camera-filter-tagline {
+  color: #d0d8ff;
+}
+
+/* Options List */
+.camera-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.camera-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.camera-checkbox-row input[type="checkbox"] {
+  accent-color: #000080;
+}
+
+/* Action Buttons */
+.camera-actions {
+  margin-top: 4px;
+}
+
+.camera-primary-btn {
+  width: 100%;
+  height: 32px;
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  outline: none;
+}
+
+.camera-primary-btn:active:not(:disabled) {
+  border-top: 2px solid #000000;
+  border-left: 2px solid #000000;
+  border-bottom: 2px solid #ffffff;
+  border-right: 2px solid #ffffff;
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #dfdfdf;
+  padding: 2px 0 0 2px;
+}
+
+.camera-primary-btn:disabled {
+  color: #808080;
+  cursor: default;
+}
+
+.camera-action-split {
+  display: flex;
+  gap: 6px;
+}
+
+.camera-btn {
+  flex: 1;
+  height: 28px;
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: bold;
+  color: #000000;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-btn:active {
+  border-top: 2px solid #000000;
+  border-left: 2px solid #000000;
+  border-bottom: 2px solid #ffffff;
+  border-right: 2px solid #ffffff;
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #dfdfdf;
+  padding: 2px 0 0 2px;
+}
+
+.camera-btn--save {
+  background: #c0c0c0;
+  color: #000000;
+}
+
+/* Classic Windows Default Action Button Emphasis */
+.camera-btn--primary-save {
+  font-weight: bold;
+  box-shadow: 0 0 0 1px #000000, inset 1px 1px 0 #ffffff, inset -1px -1px 0 #808080;
+}
+
+.camera-btn--primary-save:active {
+  box-shadow: 0 0 0 1px #000000, inset 1px 1px 0 #808080, inset -1px -1px 0 #ffffff;
+}
+
+/* 4. Status Bar */
+.camera-statusbar {
+  display: flex;
+  gap: 2px;
+  padding: 2px 4px 3px;
+  background: #c0c0c0;
+  border-top: 1px solid #808080;
+  flex-shrink: 0;
+}
+
+.camera-status-pane {
+  background: #c0c0c0;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 1px 6px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+}
+
+.camera-status-pane--msg {
+  flex: 1;
+  min-width: 0;
+}
+
+.camera-status-pane--privacy {
+  width: 175px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.camera-privacy-lock {
+  font-size: 11px;
+}
+
+/* 5. Help Modal */
+.camera-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.camera-help-dialog {
+  width: min(360px, 92vw);
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.6);
+}
+
+.camera-help-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--win-titlebar);
+  color: var(--win-titlebar-text);
+  padding: 2px 4px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.camera-help-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.camera-help-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.camera-help-version {
+  font-size: 10px;
+  color: #555555;
+}
+
+.camera-privacy-note {
+  font-size: 10px;
+  color: #222222;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.camera-help-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.camera-help-footer button {
+  width: 70px;
+}
+
+/* 6. Responsive Styles */
+@media (max-width: 640px) {
+  .camera-window {
+    width: 98vw;
+    max-height: 96vh;
+    overflow-y: auto;
+  }
+
+  .camera-window--normal {
+    max-width: calc(100vw - 8px) !important;
+  }
+
+  .camera-body {
+    flex-direction: column;
+    padding: 4px;
+    gap: 6px;
+  }
+
+  .camera-controls-pane {
+    min-width: 0;
+  }
+
+  .camera-status-pane--privacy {
+    display: none;
+  }
+}

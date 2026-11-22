@@ -1,0 +1,181 @@
+/* StartMenu.css — Authentic Windows 98 / 2000 Start Menu with Cascading Submenus */
+
+.start-menu {
+  position: fixed;
+  bottom: 28px;
+  left: 0;
+  background: var(--win-bg, #c0c0c0);
+  z-index: 9500;
+  display: flex;
+  min-width: 180px;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  user-select: none;
+}
+
+.start-menu__sidebar {
+  width: 24px;
+  background: linear-gradient(to top, #000080 0%, #1084d0 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.start-menu__sidebar-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: #dfdfdf;
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.start-menu__sidebar-os {
+  color: #ffffff;
+}
+
+.start-menu__items {
+  flex: 1;
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+}
+
+.start-menu__item-wrapper {
+  position: relative;
+}
+
+.start-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 5px 8px 5px 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.start-menu__item-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.start-menu__item-label {
+  flex: 1;
+}
+
+.start-menu__arrow {
+  font-size: 9px;
+  color: #000000;
+  margin-left: 12px;
+}
+
+.start-menu__item:hover,
+.start-menu__item--active,
+.start-menu__item-wrapper--open > .start-menu__item {
+  background: #000080;
+  color: #ffffff;
+}
+
+.start-menu__item:hover .start-menu__arrow,
+.start-menu__item--active .start-menu__arrow,
+.start-menu__item-wrapper--open > .start-menu__item .start-menu__arrow {
+  color: #ffffff;
+}
+
+.start-menu__separator {
+  height: 1px;
+  margin: 2px 2px;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+}
+
+/* Cascading Submenu Flyouts */
+.start-submenu {
+  position: absolute;
+  left: calc(100% - 2px);
+  top: -2px;
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  min-width: 175px;
+  max-width: 260px;
+  padding: 2px;
+  z-index: 9600;
+  display: flex;
+  flex-direction: column;
+}
+
+.start-submenu__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 4px 10px 4px 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.start-submenu__item:hover,
+.start-submenu__item--focused {
+  background: #000080;
+  color: #ffffff;
+}
+
+.start-submenu__doc-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.start-submenu__empty {
+  padding: 8px 12px;
+  color: #808080;
+  font-style: italic;
+  font-size: 11px;
+}
+
+.start-submenu__clear {
+  color: #555555;
+  font-size: 10px;
+}
+
+.start-submenu__clear:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 480px) {
+  .start-menu {
+    max-width: calc(100vw - 12px);
+  }
+
+  .start-submenu {
+    min-width: 140px;
+    max-width: calc(100vw - 170px);
+  }
+}

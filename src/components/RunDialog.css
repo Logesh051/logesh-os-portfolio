@@ -1,0 +1,223 @@
+/* RunDialog.css — Classic Windows 98 / 2000 Run Dialog */
+
+.run-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 9900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.run-dialog {
+  width: min(380px, calc(100vw - 12px));
+  max-width: calc(100vw - 12px);
+  background: var(--win-bg, #c0c0c0);
+  border-top: 2px solid var(--win-white, #ffffff);
+  border-left: 2px solid var(--win-white, #ffffff);
+  border-bottom: 2px solid var(--win-black, #000000);
+  border-right: 2px solid var(--win-black, #000000);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  user-select: none;
+}
+
+.run-dialog__titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px;
+  background: var(--win-titlebar, #000080);
+  color: var(--win-titlebar-text, #ffffff);
+  height: 22px;
+}
+
+.run-dialog__title {
+  font-weight: bold;
+  font-size: 11px;
+}
+
+.run-dialog__close-btn {
+  width: 16px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #c0c0c0;
+  cursor: pointer;
+  padding: 0;
+  font-size: 9px;
+  font-weight: bold;
+  color: #000000;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+}
+
+.run-dialog__body {
+  padding: 12px 14px 14px 14px;
+}
+
+.run-dialog__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.run-dialog__icon {
+  flex-shrink: 0;
+}
+
+.run-dialog__prompt {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #000000;
+}
+
+.run-dialog__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.run-dialog__input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.run-dialog__label {
+  width: 38px;
+  font-size: 11px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.run-dialog__input-wrapper {
+  flex: 1;
+  background: #ffffff;
+  height: 22px;
+  display: flex;
+  align-items: center;
+}
+
+.run-dialog__input {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 2px 4px;
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  background: transparent;
+  color: #000000;
+}
+
+.run-dialog__button-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.run-dialog__btn {
+  min-width: 68px;
+  height: 22px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.run-dialog__btn:active {
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 1px 0 0 1px;
+}
+
+.run-dialog__btn--default {
+  border: 1px solid #000000;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #808080;
+}
+
+.run-dialog__btn:disabled {
+  color: #808080;
+  cursor: default;
+}
+
+/* Error Sub-dialog */
+.run-error-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.run-error-dialog {
+  width: min(320px, calc(100vw - 16px));
+  max-width: calc(100vw - 16px);
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.6);
+}
+
+.run-error-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px;
+  background: var(--win-titlebar, #000080);
+  color: #ffffff;
+  height: 22px;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+.run-error-body {
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.run-error-icon {
+  flex-shrink: 0;
+}
+
+.run-error-text p {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.run-error-footer {
+  padding: 0 14px 12px 14px;
+  display: flex;
+  justify-content: flex-end;
+}

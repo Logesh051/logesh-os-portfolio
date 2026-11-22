@@ -1,0 +1,163 @@
+/* LOGESH_OS — Windows 95 Global Styles */
+
+/* ===== CSS CUSTOM PROPERTIES ===== */
+:root {
+  /* Win95 System Colors */
+  --win-bg: #c0c0c0;
+  --win-dark: #808080;
+  --win-darker: #404040;
+  --win-light: #dfdfdf;
+  --win-white: #ffffff;
+  --win-black: #000000;
+
+  /* Title bar defaults to authentic Windows 98 / 2000 navy blue gradient */
+  --win-titlebar: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+  --win-titlebar-text: #ffffff;
+  --win-titlebar-border: #000040;
+
+  /* Desktop */
+  --win-desktop: #2c537d;
+
+  /* Selection / highlight */
+  --win-highlight: #000080;
+  --win-highlight-text: #ffffff;
+
+  /* Text */
+  --win-text: #000000;
+  --win-text-disabled: #808080;
+
+  /* Inset field (address bar, text inputs) */
+  --win-field: #ffffff;
+  --win-field-text: #000000;
+
+  /* Links */
+  --win-link: #0000ff;
+  --win-link-visited: #800080;
+
+  /* Classic Windows System Font Stack */
+  --win-font: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  --win-font-mono: 'Fixedsys', 'Courier New', Courier, monospace;
+  --win-font-size: 11px;
+}
+
+/* Title Bar Themes */
+.titlebar-navy {
+  --win-titlebar: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+  --win-titlebar-text: #ffffff;
+  --win-titlebar-border: #000040;
+}
+
+.titlebar-grey {
+  --win-titlebar: #c0c0c0;
+  --win-titlebar-text: #000000;
+  --win-titlebar-border: #808080;
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scrollbar-color: var(--win-bg) #dfdfdf;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--win-font);
+  font-size: var(--win-font-size);
+  color: var(--win-text);
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeSpeed;
+  user-select: none;
+}
+
+/* ===== WIN95 BORDER HELPERS ===== */
+
+/* Raised border (buttons, window frames) */
+.win-raised {
+  border-top: 2px solid var(--win-white);
+  border-left: 2px solid var(--win-white);
+  border-bottom: 2px solid var(--win-black);
+  border-right: 2px solid var(--win-black);
+  box-shadow: inset 1px 1px 0 var(--win-light), inset -1px -1px 0 var(--win-dark);
+}
+
+/* Sunken border (text fields, status areas) */
+.win-sunken {
+  border-top: 2px solid var(--win-dark);
+  border-left: 2px solid var(--win-dark);
+  border-bottom: 2px solid var(--win-white);
+  border-right: 2px solid var(--win-white);
+  box-shadow: inset 1px 1px 0 var(--win-black), inset -1px -1px 0 var(--win-light);
+}
+
+/* ===== SCROLLBAR STYLING ===== */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: repeating-conic-gradient(var(--win-bg) 0% 25%, var(--win-white) 0% 50%) 50% / 2px 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--win-bg);
+  border-top: 2px solid var(--win-white);
+  border-left: 2px solid var(--win-white);
+  border-bottom: 2px solid var(--win-black);
+  border-right: 2px solid var(--win-black);
+  box-shadow: inset 1px 1px 0 var(--win-light), inset -1px -1px 0 var(--win-dark);
+}
+
+::-webkit-scrollbar-button {
+  display: block;
+  width: 16px;
+  height: 16px;
+  background: var(--win-bg);
+  border-top: 2px solid var(--win-white);
+  border-left: 2px solid var(--win-white);
+  border-bottom: 2px solid var(--win-black);
+  border-right: 2px solid var(--win-black);
+}
+
+::-webkit-scrollbar-button:single-button:vertical:decrement {
+  background: var(--win-bg) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><polygon points='8,5 4,10 12,10' fill='%23000000'/></svg>") no-repeat center center;
+}
+
+::-webkit-scrollbar-button:single-button:vertical:increment {
+  background: var(--win-bg) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><polygon points='8,11 4,6 12,6' fill='%23000000'/></svg>") no-repeat center center;
+}
+
+::-webkit-scrollbar-button:single-button:horizontal:decrement {
+  background: var(--win-bg) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><polygon points='5,8 10,4 10,12' fill='%23000000'/></svg>") no-repeat center center;
+}
+
+::-webkit-scrollbar-button:single-button:horizontal:increment {
+  background: var(--win-bg) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><polygon points='11,8 6,4 6,12' fill='%23000000'/></svg>") no-repeat center center;
+}
+
+::-webkit-scrollbar-button:active {
+  border-top: 2px solid var(--win-black);
+  border-left: 2px solid var(--win-black);
+  border-bottom: 2px solid var(--win-white);
+  border-right: 2px solid var(--win-white);
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== FOCUS VISIBLE ===== */
+:focus-visible {
+  outline: 1px dotted var(--win-black);
+  outline-offset: -2px;
+}

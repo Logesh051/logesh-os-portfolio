@@ -1,0 +1,513 @@
+/* BrowserWindow.css — Classic Windows 98 / 2000 Window Management */
+
+.browser-window {
+  display: flex;
+  flex-direction: column;
+  background: var(--win-bg, #c0c0c0);
+  border-top: 2px solid var(--win-white, #ffffff);
+  border-left: 2px solid var(--win-white, #ffffff);
+  border-bottom: 2px solid var(--win-black, #000000);
+  border-right: 2px solid var(--win-black, #000000);
+  box-shadow: inset 1px 1px 0 var(--win-light, #dfdfdf), inset -1px -1px 0 var(--win-dark, #808080);
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.browser-window--active {
+  z-index: 5010;
+}
+
+.browser-window--inactive {
+  z-index: 5000;
+}
+
+.browser-window--maximized {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* 1. Title Bar */
+.browser-window__titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px;
+  height: 24px;
+  flex-shrink: 0;
+  cursor: move;
+  position: relative;
+  border-bottom: 1px solid #808080;
+}
+
+.browser-window--active .browser-window__titlebar {
+  background: var(--win-titlebar, #000080);
+  color: var(--win-titlebar-text, #ffffff);
+}
+
+.browser-window--inactive .browser-window__titlebar {
+  background: #808080;
+  color: #d4d0c8;
+}
+
+.browser-window__titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.browser-window__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 1px;
+}
+
+.browser-window__title {
+  font-family: var(--win-font, Tahoma, "MS Sans Serif", sans-serif);
+  font-size: 11px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.2px;
+}
+
+.browser-window__titlebar-controls {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.browser-window__control-btn {
+  width: 16px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #c0c0c0;
+  cursor: pointer;
+  padding: 0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  outline: none;
+}
+
+.browser-window__close-btn {
+  margin-left: 2px;
+}
+
+.browser-window__control-btn:active {
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #dfdfdf;
+  padding: 1px 0 0 1px;
+}
+
+/* 2. Classic Windows System Menu */
+.win-system-menu {
+  position: absolute;
+  top: 24px;
+  left: 2px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  min-width: 160px;
+  z-index: 250;
+  padding: 2px 0;
+  font-family: Tahoma, "MS Sans Serif", sans-serif;
+  font-size: 11px;
+}
+
+.win-system-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 14px 3px 18px;
+  color: #000000;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.win-system-menu-item:hover:not(.win-system-menu-item--disabled) {
+  background: #000080;
+  color: #ffffff;
+}
+
+.win-system-menu-item--disabled {
+  color: #808080;
+  cursor: default;
+}
+
+.win-system-menu-shortcut {
+  font-size: 10px;
+  color: #555555;
+  margin-left: 12px;
+}
+
+.win-system-menu-item:hover:not(.win-system-menu-item--disabled) .win-system-menu-shortcut {
+  color: #dfdfdf;
+}
+
+.win-system-menu-separator {
+  height: 1px;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  margin: 3px 2px;
+}
+
+/* 3. Resize Handles */
+.win-resize-handle {
+  position: absolute;
+  z-index: 100;
+}
+
+.win-resize-handle--n {
+  top: -3px;
+  left: 8px;
+  right: 8px;
+  height: 6px;
+  cursor: n-resize;
+}
+
+.win-resize-handle--s {
+  bottom: -3px;
+  left: 8px;
+  right: 8px;
+  height: 6px;
+  cursor: s-resize;
+}
+
+.win-resize-handle--w {
+  top: 8px;
+  bottom: 8px;
+  left: -3px;
+  width: 6px;
+  cursor: w-resize;
+}
+
+.win-resize-handle--e {
+  top: 8px;
+  bottom: 8px;
+  right: -3px;
+  width: 6px;
+  cursor: e-resize;
+}
+
+.win-resize-handle--nw {
+  top: -3px;
+  left: -3px;
+  width: 10px;
+  height: 10px;
+  cursor: nw-resize;
+}
+
+.win-resize-handle--ne {
+  top: -3px;
+  right: -3px;
+  width: 10px;
+  height: 10px;
+  cursor: ne-resize;
+}
+
+.win-resize-handle--sw {
+  bottom: -3px;
+  left: -3px;
+  width: 10px;
+  height: 10px;
+  cursor: sw-resize;
+}
+
+.win-resize-handle--se {
+  bottom: -3px;
+  right: -3px;
+  width: 10px;
+  height: 10px;
+  cursor: se-resize;
+}
+
+/* 4. Browser Toolbar */
+.browser-window__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px;
+  background: var(--win-bg, #c0c0c0);
+  border-bottom: 1px solid var(--win-dark, #808080);
+  flex-shrink: 0;
+}
+
+.browser-window__nav-buttons {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.browser-window__nav-btn {
+  width: 24px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--win-bg, #c0c0c0);
+  cursor: pointer;
+  font-size: 11px;
+  padding: 0;
+  font-family: var(--win-font, Tahoma, "MS Sans Serif", sans-serif);
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+}
+
+.browser-window__nav-btn:disabled {
+  color: var(--win-text-disabled, #808080);
+  cursor: default;
+}
+
+.browser-window__nav-btn:active:not(:disabled) {
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #dfdfdf;
+  padding: 1px 0 0 1px;
+}
+
+.browser-window__address-bar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  position: relative;
+}
+
+.browser-window__address-label {
+  font-size: 11px;
+  color: var(--win-text, #000000);
+  flex-shrink: 0;
+}
+
+.browser-window__address-field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 22px;
+  background: var(--win-field, #ffffff);
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 0 1px 0 4px;
+  box-sizing: border-box;
+}
+
+.browser-window__address-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: var(--win-font-mono, "Courier New", Courier, monospace);
+  font-size: 11px;
+  color: var(--win-field-text, #000000);
+  background: transparent;
+  padding: 0;
+  min-width: 60px;
+}
+
+.browser-window__address-dropdown-btn {
+  width: 16px;
+  height: 18px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  font-size: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.browser-window__address-dropdown-btn:active {
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+}
+
+.browser-window__address-go-btn {
+  height: 22px;
+  padding: 0 6px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  font-family: var(--win-font, Tahoma, "MS Sans Serif", sans-serif);
+  font-size: 11px;
+  font-weight: bold;
+  color: #000000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.browser-window__address-go-btn:active {
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+}
+
+.browser-window__address-menu {
+  position: absolute;
+  top: 100%;
+  left: 50px;
+  right: 36px;
+  background: #ffffff;
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.4);
+  z-index: 1005;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.browser-window__address-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  font-size: 11px;
+  color: #000000;
+  cursor: pointer;
+  user-select: none;
+}
+
+.browser-window__address-option:hover {
+  background: #000080;
+  color: #ffffff;
+}
+
+/* Modal Error Box */
+.browser-window__error-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.browser-window__error-box {
+  width: min(380px, 92vw);
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.6);
+  font-family: var(--win-font, Tahoma, "MS Sans Serif", sans-serif);
+}
+
+.browser-window__error-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--win-titlebar, #000080);
+  color: var(--win-titlebar-text, #ffffff);
+  padding: 2px 4px;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+.browser-window__error-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 14px;
+  font-size: 11px;
+  color: #000000;
+  line-height: 1.4;
+}
+
+.browser-window__error-icon {
+  flex-shrink: 0;
+}
+
+.browser-window__error-actions {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 12px;
+}
+
+/* 5. Content Area */
+.browser-window__content {
+  flex: 1;
+  background: var(--win-field, #ffffff);
+  overflow: hidden;
+  margin: 2px;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+}
+
+.browser-window__content-inner {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 6. Responsive */
+@media (max-width: 640px) {
+  .browser-window__address-label {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .browser-window--normal {
+    max-width: calc(100vw - 8px) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .browser-window__toolbar {
+    padding: 2px;
+    gap: 2px;
+  }
+
+  .browser-window__nav-btn {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+  }
+}

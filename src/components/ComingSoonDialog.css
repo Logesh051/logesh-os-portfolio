@@ -1,0 +1,118 @@
+/* Coming Soon Dialog - Win95 Style */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 8000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coming-soon-dialog {
+  background: var(--win-bg);
+  width: 340px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.6);
+}
+
+.coming-soon-dialog__titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px;
+  background: var(--win-titlebar);
+  color: var(--win-titlebar-text);
+  border-bottom: 1px solid var(--win-titlebar-border, var(--win-dark));
+  height: 24px;
+}
+
+.coming-soon-dialog__titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.coming-soon-dialog__title {
+  font-family: var(--win-font);
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--win-titlebar-text);
+}
+
+.coming-soon-dialog__close-btn {
+  width: 16px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--win-bg);
+  cursor: pointer;
+  padding: 0;
+}
+
+.coming-soon-dialog__close-btn:active {
+  border-top: 2px solid var(--win-black);
+  border-left: 2px solid var(--win-black);
+  border-bottom: 2px solid var(--win-white);
+  border-right: 2px solid var(--win-white);
+}
+
+.coming-soon-dialog__content {
+  display: flex;
+  gap: 16px;
+  padding: 20px 16px 12px;
+  align-items: flex-start;
+}
+
+.coming-soon-dialog__icon {
+  flex-shrink: 0;
+}
+
+.coming-soon-dialog__heading {
+  font-family: var(--win-font);
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--win-text);
+}
+
+.coming-soon-dialog__description {
+  font-family: var(--win-font);
+  font-size: var(--win-font-size);
+  color: var(--win-text);
+  line-height: 1.5;
+}
+
+.coming-soon-dialog__footer {
+  display: flex;
+  justify-content: center;
+  padding: 8px 16px 16px;
+}
+
+.coming-soon-dialog__ok-btn {
+  min-width: 80px;
+  height: 24px;
+  background: var(--win-bg);
+  cursor: pointer;
+  font-family: var(--win-font);
+  font-size: var(--win-font-size);
+  font-weight: bold;
+}
+
+.coming-soon-dialog__ok-btn:active {
+  border-top: 2px solid var(--win-black);
+  border-left: 2px solid var(--win-black);
+  border-bottom: 2px solid var(--win-white);
+  border-right: 2px solid var(--win-white);
+}
+
+.coming-soon-dialog__ok-btn:focus-visible {
+  outline: 1px dotted var(--win-black);
+  outline-offset: -4px;
+}

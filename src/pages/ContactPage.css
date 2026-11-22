@@ -1,0 +1,924 @@
+/* Contact Page - Authentic Windows 95/98 Address Book (WAB.EXE) & Outlook Express Style */
+
+.wab-app {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 6px;
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  box-sizing: border-box;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* 1. Menu Bar */
+.wab-menubar {
+  display: flex;
+  align-items: center;
+  background: #c0c0c0;
+  padding: 1px 2px;
+  border-bottom: 1px solid #808080;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.wab-menu-item {
+  position: relative;
+}
+
+.wab-menu-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 2px 6px;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  cursor: pointer;
+  outline: none;
+}
+
+.wab-menu-btn:hover,
+.wab-menu-btn--active {
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  background: #d4d0c8;
+}
+
+.wab-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  min-width: 200px;
+  z-index: 1000;
+  padding: 2px 0;
+}
+
+.wab-dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 3px 14px 3px 6px;
+  font-size: 11px;
+  cursor: pointer;
+  color: #000000;
+  white-space: nowrap;
+}
+
+.wab-dropdown-item:hover {
+  background: #000080;
+  color: #ffffff;
+}
+
+.wab-dropdown-item:hover .wab-dropdown-shortcut {
+  color: #dfdfdf;
+}
+
+.wab-dropdown-check {
+  width: 16px;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.wab-dropdown-shortcut {
+  margin-left: auto;
+  padding-left: 16px;
+  font-size: 10px;
+  color: #606060;
+}
+
+.wab-dropdown-separator {
+  height: 1px;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  margin: 3px 2px;
+}
+
+/* 2. Toolbar */
+.wab-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #c0c0c0;
+  padding: 3px 4px;
+  border-bottom: 1px solid #808080;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.wab-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.wab-tool-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  padding: 0 6px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  cursor: pointer;
+  outline: none;
+}
+
+.wab-tool-btn:active:not(:disabled) {
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  background: #dfdfdf;
+  padding: 1px 5px -1px 7px;
+}
+
+.wab-tool-btn:disabled {
+  color: #808080;
+  cursor: default;
+}
+
+.wab-tool-btn:disabled svg {
+  opacity: 0.4;
+}
+
+.wab-tool-label {
+  font-size: 11px;
+}
+
+.wab-tool-separator {
+  width: 1px;
+  height: 18px;
+  background: #808080;
+  border-right: 1px solid #ffffff;
+  margin: 0 3px;
+}
+
+.wab-address-bar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 240px;
+}
+
+.wab-address-label {
+  font-size: 11px;
+  color: #000000;
+  flex-shrink: 0;
+}
+
+.wab-address-field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  background: #ffffff;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 1px 4px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.wab-address-icon {
+  flex-shrink: 0;
+}
+
+.wab-address-text {
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 3. Main Split Body */
+.wab-body {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  min-height: 0;
+  overflow: hidden;
+  padding: 3px 4px;
+  gap: 2px;
+}
+
+/* Left Pane: Contacts List */
+.wab-left-pane {
+  width: 220px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.wab-pane-header {
+  height: 18px;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  background: #c0c0c0;
+  font-size: 11px;
+  font-weight: bold;
+  color: #000000;
+  border-bottom: 1px solid #808080;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.wab-contacts-list {
+  flex: 1;
+  background: #ffffff;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 4px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+}
+
+.wab-tree-root {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 2px;
+  font-weight: bold;
+  font-size: 11px;
+  user-select: none;
+  color: #000000;
+}
+
+.wab-tree-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 9px;
+  height: 9px;
+  border: 1px solid #808080;
+  background: #ffffff;
+  font-size: 9px;
+  line-height: 1;
+  font-family: monospace;
+  color: #000000;
+  margin-right: 2px;
+}
+
+.wab-folder-icon {
+  flex-shrink: 0;
+}
+
+.wab-contact-items {
+  margin-left: 14px;
+  margin-top: 2px;
+}
+
+.wab-contact-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px;
+  font-size: 11px;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+
+.wab-contact-row--selected {
+  background: #000080;
+  color: #ffffff;
+}
+
+.wab-tree-connector {
+  font-family: monospace;
+  font-size: 11px;
+  color: #808080;
+}
+
+.wab-contact-row--selected .wab-tree-connector {
+  color: #ffffff;
+}
+
+.wab-contact-icon {
+  flex-shrink: 0;
+}
+
+.wab-contact-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Splitter */
+.wab-splitter {
+  width: 4px;
+  background: #c0c0c0;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #808080;
+  flex-shrink: 0;
+}
+
+/* Right Pane: Property Sheet / Details View */
+.wab-right-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.wab-details-scroll {
+  flex: 1;
+  background: #ffffff;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 12px 16px;
+  overflow-y: auto;
+  overflow-x: auto;
+  min-height: 0;
+}
+
+/* Details Header */
+.wab-details-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #c0c0c0;
+  margin-bottom: 12px;
+}
+
+.wab-details-card-icon {
+  flex-shrink: 0;
+}
+
+.wab-details-name {
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000080;
+  margin: 0 0 2px 0;
+}
+
+.wab-details-role {
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #444444;
+  margin: 0;
+}
+
+/* Property Groupboxes */
+.wab-groupbox {
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  box-shadow: inset 1px 1px 0 #ffffff;
+  padding: 8px 12px 10px;
+  margin-bottom: 10px;
+  background: #fafafa;
+}
+
+.wab-groupbox-legend {
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+  color: #000000;
+  padding: 0 4px;
+}
+
+.wab-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+}
+
+.wab-table td {
+  padding: 4px 6px;
+  vertical-align: top;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.wab-label-col {
+  width: 125px;
+  font-weight: bold;
+  color: #333333;
+  white-space: nowrap;
+}
+
+.wab-value-col {
+  color: #000000;
+  word-break: break-word;
+}
+
+.wab-hyperlink {
+  color: #0000ee;
+  text-decoration: underline;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+}
+
+.wab-hyperlink:visited {
+  color: #551a8b;
+}
+
+.wab-hyperlink:hover {
+  color: #ff0000;
+}
+
+.wab-inline-btn {
+  margin-left: 8px;
+  padding: 1px 8px;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 10px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  cursor: pointer;
+}
+
+.wab-inline-btn:active {
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+}
+
+/* Actions Row at bottom of details */
+.wab-actions-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.wab-btn {
+  padding: 4px 14px;
+  background: #c0c0c0;
+  color: #000000;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.wab-btn:hover {
+  background: #d4d0c8;
+}
+
+.wab-btn:active {
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #dfdfdf;
+  padding: 5px 13px 3px 15px;
+}
+
+/* 4. Address Book Status Bar */
+.wab-statusbar {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  padding: 2px 4px 3px;
+  background: #c0c0c0;
+  border-top: 1px solid #808080;
+  flex-shrink: 0;
+  user-select: none;
+  font-size: 11px;
+}
+
+.wab-status-pane {
+  background: #c0c0c0;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 1px 6px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 18px;
+  box-sizing: border-box;
+}
+
+.wab-status-pane--count {
+  width: 95px;
+  flex-shrink: 0;
+}
+
+.wab-status-pane--selected {
+  flex: 1;
+  min-width: 0;
+}
+
+.wab-status-pane--zone {
+  width: 140px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.wab-zone-icon {
+  flex-shrink: 0;
+}
+
+.wab-status-notification {
+  color: #000080;
+  font-weight: bold;
+}
+
+/* 5. Modals & Dialogs (Composer & Properties) */
+.wab-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Outlook Express Composer Window */
+.wab-composer-window {
+  width: min(580px, 96vw);
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.wab-composer-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--win-titlebar);
+  color: var(--win-titlebar-text);
+  padding: 2px 4px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.wab-composer-title-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wab-composer-close-btn {
+  width: 16px;
+  height: 14px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  font-size: 9px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.wab-composer-menubar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #c0c0c0;
+  padding: 2px 6px;
+  border-bottom: 1px solid #808080;
+  font-size: 11px;
+  user-select: none;
+}
+
+.wab-composer-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #c0c0c0;
+  padding: 3px 6px;
+  border-bottom: 1px solid #808080;
+}
+
+.wab-composer-tool-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  cursor: pointer;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+}
+
+.wab-composer-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  background: #c0c0c0;
+  border-bottom: 1px solid #808080;
+}
+
+.wab-field-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wab-field-label {
+  width: 55px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #000000;
+}
+
+.wab-field-input-box {
+  flex: 1;
+  background: #ffffff;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 2px 6px;
+  font-size: 11px;
+}
+
+.wab-field-pill {
+  color: #000080;
+  font-weight: bold;
+}
+
+.wab-field-input {
+  flex: 1;
+  background: #ffffff;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 3px 6px;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  outline: none;
+}
+
+.wab-composer-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 6px 10px;
+  background: #ffffe1;
+  border-bottom: 1px solid #808080;
+  font-size: 10px;
+  line-height: 1.35;
+  color: #333333;
+}
+
+.wab-notice-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.wab-composer-body {
+  padding: 8px 10px;
+  background: #ffffff;
+}
+
+.wab-composer-textarea {
+  width: 100%;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 6px;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  line-height: 1.4;
+  outline: none;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.wab-composer-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 8px 10px;
+  background: #c0c0c0;
+  border-top: 1px solid #808080;
+}
+
+/* Contact Properties Dialog */
+.wab-props-dialog {
+  width: min(440px, 94vw);
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+}
+
+.wab-props-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--win-titlebar);
+  color: var(--win-titlebar-text);
+  padding: 2px 4px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.wab-props-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 4px 6px 0;
+  background: #c0c0c0;
+  border-bottom: 1px solid #ffffff;
+}
+
+.wab-props-tab {
+  padding: 3px 8px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #000000;
+  border-bottom: none;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+  outline: none;
+  margin-bottom: -1px;
+}
+
+.wab-props-tab--active {
+  font-weight: bold;
+  background: #ffffff;
+  border-bottom: 1px solid #ffffff;
+}
+
+.wab-props-tab-body {
+  background: #ffffff;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #808080;
+  border-bottom: 1px solid #808080;
+  margin: 0 6px;
+  min-height: 180px;
+}
+
+.wab-props-tab-content {
+  padding: 12px;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.wab-props-tab-content p {
+  margin: 0 0 6px 0;
+}
+
+.wab-props-general-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.wab-props-title-text {
+  font-size: 14px;
+  font-weight: bold;
+  color: #000080;
+}
+
+.wab-props-sub-text {
+  font-size: 11px;
+  color: #555555;
+}
+
+.wab-dialog-hr {
+  border: none;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  margin: 8px 0;
+}
+
+.wab-props-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 8px 6px;
+  background: #c0c0c0;
+}
+
+/* 6. Responsive Styles */
+@media (max-width: 768px) {
+  .wab-app {
+    margin: 2px;
+  }
+
+  .wab-toolbar {
+    padding: 2px;
+    gap: 4px;
+  }
+
+  .wab-tool-label {
+    display: none;
+  }
+
+  .wab-address-bar {
+    min-width: 140px;
+  }
+
+  .wab-body {
+    flex-direction: column;
+    padding: 2px;
+  }
+
+  .wab-left-pane {
+    width: 100%;
+    max-height: 100px;
+    flex-shrink: 0;
+  }
+
+  .wab-splitter {
+    display: none;
+  }
+
+  .wab-right-pane {
+    flex: 1;
+    min-height: 200px;
+  }
+
+  .wab-label-col {
+    width: 95px;
+  }
+
+  .wab-status-pane--count {
+    width: 75px;
+  }
+
+  .wab-status-pane--zone {
+    display: none;
+  }
+}

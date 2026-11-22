@@ -1,0 +1,201 @@
+/* Desktop Environment Styles */
+.desktop {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background-color: #008080;
+  background-image: url('./assets/new_wallpaperhub-9363-1920x1080.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  user-select: none;
+}
+
+.desktop--bliss {
+  background-image: url('./assets/new_wallpaperhub-9363-1920x1080.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.desktop--teal {
+  background-image: none;
+  background-color: #008080;
+}
+
+.desktop--blue {
+  background-color: #2c537d;
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+
+.desktop--navy {
+  background-image: none;
+  background-color: #1a3350;
+}
+
+/* Icons Grid Container - aligned vertically along the left */
+.desktop__icons {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 10;
+  max-height: calc(100vh - 48px);
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+/* Shut Down Dialog */
+.shutdown-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shutdown-dialog {
+  background: var(--win-bg);
+  width: 320px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.6);
+}
+
+.shutdown-dialog__titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 4px;
+  background: var(--win-titlebar);
+  color: var(--win-titlebar-text);
+  height: 22px;
+}
+
+.shutdown-dialog__title {
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.shutdown-dialog__content {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  align-items: flex-start;
+}
+
+.shutdown-dialog__icon {
+  flex-shrink: 0;
+}
+
+.shutdown-dialog__body {
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shutdown-dialog__question {
+  font-weight: bold;
+}
+
+.shutdown-dialog__options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.shutdown-dialog__option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.shutdown-dialog__buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 16px 14px;
+}
+
+.shutdown-dialog__btn {
+  min-width: 70px;
+  height: 24px;
+  background: var(--win-bg);
+  font-family: var(--win-font);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.shutdown-dialog__btn:active {
+  border-top: 2px solid var(--win-black);
+  border-left: 2px solid var(--win-black);
+  border-bottom: 2px solid var(--win-white);
+  border-right: 2px solid var(--win-white);
+}
+
+/* Shutdown Safe Screen */
+.safe-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000000;
+  z-index: 20000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ff8800;
+  font-family: var(--win-font-mono);
+  text-align: center;
+  padding: 24px;
+}
+
+.safe-screen__text {
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+  text-shadow: 0 0 10px rgba(255, 136, 0, 0.6);
+}
+
+.safe-screen__restart-btn {
+  padding: 8px 24px;
+  background: #202020;
+  color: #00ff00;
+  border: 2px solid #00ff00;
+  font-family: var(--win-font-mono);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.safe-screen__restart-btn:hover {
+  background: #00ff00;
+  color: #000000;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .desktop__icons {
+    top: 10px;
+    left: 10px;
+    gap: 12px;
+    max-height: calc(100vh - 54px);
+  }
+}

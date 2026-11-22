@@ -1,0 +1,108 @@
+/* Context Menu - Win98/2000 Style */
+
+.context-menu {
+  background: var(--win-bg, #c0c0c0);
+  padding: 2px;
+  min-width: 160px;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  user-select: none;
+}
+
+.context-menu__item-wrapper {
+  position: relative;
+}
+
+.context-menu__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 3px 14px 3px 18px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  white-space: nowrap;
+}
+
+.context-menu__item-label {
+  flex: 1;
+}
+
+.context-menu__arrow {
+  font-size: 9px;
+  margin-left: 12px;
+  color: #000000;
+}
+
+.context-menu__item:hover:not(:disabled),
+.context-menu__item--focused:not(:disabled),
+.context-menu__item-wrapper:hover > .context-menu__item:not(:disabled) {
+  background: #000080;
+  color: #ffffff;
+}
+
+.context-menu__item:hover:not(:disabled) .context-menu__arrow,
+.context-menu__item--focused:not(:disabled) .context-menu__arrow,
+.context-menu__item-wrapper:hover > .context-menu__item:not(:disabled) .context-menu__arrow {
+  color: #ffffff;
+}
+
+.context-menu__item--disabled,
+.context-menu__item:disabled {
+  color: #808080;
+  cursor: default;
+}
+
+.context-menu__separator {
+  height: 1px;
+  margin: 3px 2px;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+}
+
+/* Submenu Flyout */
+.context-submenu {
+  position: absolute;
+  left: calc(100% - 2px);
+  top: -2px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  min-width: 140px;
+  padding: 2px;
+  z-index: 10010;
+  display: flex;
+  flex-direction: column;
+}
+
+.context-submenu__item {
+  display: block;
+  width: 100%;
+  padding: 3px 14px 3px 18px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  white-space: nowrap;
+}
+
+.context-submenu__item:hover {
+  background: #000080;
+  color: #ffffff;
+}

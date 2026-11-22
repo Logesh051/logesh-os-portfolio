@@ -1,0 +1,189 @@
+/* SnakeHallOfFame.css — Authentic Windows 98 / 2000 Desktop Widget */
+
+.snake-hof-widget {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 210px;
+  background: var(--win-bg, #c0c0c0);
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  z-index: 15;
+  user-select: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.snake-hof-widget:hover {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.snake-hof-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 5px;
+  background: var(--win-titlebar, #000080);
+  color: #ffffff;
+  height: 20px;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+.snake-hof-titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.snake-hof-live-badge {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 9px;
+  font-weight: bold;
+  color: #00ff00;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.snake-hof-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00ff00;
+  box-shadow: 0 0 4px #00ff00;
+  animation: pulse-live 1.5s infinite;
+}
+
+@keyframes pulse-live {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+.snake-hof-body {
+  padding: 6px;
+  background: #ffffff;
+  margin: 3px;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+}
+
+.snake-hof-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+}
+
+.snake-hof-table th {
+  text-align: left;
+  border-bottom: 1px solid #c0c0c0;
+  padding: 2px 3px;
+  color: #555555;
+  font-weight: bold;
+}
+
+.snake-hof-table th.score-col {
+  text-align: right;
+}
+
+.snake-hof-table td {
+  padding: 3px 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.snake-hof-rank {
+  width: 20px;
+  font-weight: bold;
+  color: #000080;
+}
+
+.snake-hof-rank--1 { color: #cc8800; }
+.snake-hof-rank--2 { color: #666666; }
+.snake-hof-rank--3 { color: #884400; }
+
+.snake-hof-name {
+  max-width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #000000;
+}
+
+.snake-hof-score {
+  text-align: right;
+  font-weight: bold;
+  color: #005500;
+}
+
+.snake-hof-empty,
+.snake-hof-loading,
+.snake-hof-error {
+  padding: 12px 6px;
+  text-align: center;
+  font-size: 10px;
+  color: #666666;
+  font-style: italic;
+}
+
+.snake-hof-footer {
+  padding: 4px 6px;
+  background: #c0c0c0;
+  font-size: 9px;
+  text-align: center;
+  color: #222222;
+  border-top: 1px solid #dfdfdf;
+}
+
+.snake-hof-prompt {
+  font-weight: bold;
+  color: #000080;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.snake-hof-play-hint {
+  font-size: 9px;
+  color: #555555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .snake-hof-widget {
+    top: auto;
+    bottom: 34px;
+    right: 6px;
+    width: 175px;
+    font-size: 10px;
+    z-index: 12;
+  }
+
+  .snake-hof-body {
+    padding: 4px;
+    max-height: 110px;
+    overflow-y: auto;
+  }
+
+  .snake-hof-name {
+    max-width: 70px;
+  }
+
+  .snake-hof-footer {
+    padding: 2px 4px;
+    font-size: 8px;
+  }
+}

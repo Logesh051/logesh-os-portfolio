@@ -1,0 +1,192 @@
+/* About Page - Authentic 1998–2002 Personal Webpage Viewed in Classic Browser */
+
+.about-page {
+  display: block;
+  width: min(760px, calc(100% - 32px));
+  margin: 0 auto !important;
+  padding: 12px 10px 24px;
+  background: #ffffff;
+  color: #000000;
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 15px;
+  line-height: 1.45;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* 1. Page Heading and Introduction */
+.about-page__header {
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.about-page__title {
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 22px;
+  font-weight: bold;
+  color: #000080;
+  margin: 0 0 4px 0;
+  letter-spacing: 0;
+}
+
+.about-page__subtitle {
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 14px;
+  color: #333333;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Horizontal Rule - Classic etched late-90s HTML style */
+.about-page__hr {
+  border: none;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  margin: 12px 0;
+}
+
+/* 2. Sections */
+.about-page__section {
+  margin-bottom: 6px;
+}
+
+.about-page__heading {
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 17px;
+  font-weight: bold;
+  color: #000000;
+  margin: 0 0 6px 0;
+}
+
+.about-page__p {
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 15px;
+  color: #000000;
+  line-height: 1.45;
+  margin: 0 0 10px 0;
+}
+
+.about-page__closing {
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 15px;
+  color: #000000;
+  margin: 6px 0 0 0;
+  font-style: italic;
+}
+
+/* 4. Connect With Me - Classic Hyperlinks List */
+.about-page__link-list {
+  margin: 6px 0 10px 24px;
+  padding: 0;
+  list-style-type: disc;
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 15px;
+  color: #000000;
+}
+
+.about-page__link-list li {
+  margin-bottom: 4px;
+  line-height: 1.45;
+}
+
+.about-page__link {
+  color: #0000ee;
+  text-decoration: underline;
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 15px;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+.about-page__link:visited {
+  color: #551a8b;
+}
+
+.about-page__link:hover {
+  color: #ff0000;
+}
+
+/* 5. Resume Section - Authentic Classic HTML Fieldset / Group Box */
+.about-page__fieldset {
+  border: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  box-shadow: inset 1px 1px 0 #808080;
+  background: #ffffff;
+  padding: 8px 12px 12px;
+  margin: 8px 0 16px;
+  box-sizing: border-box;
+}
+
+.about-page__legend {
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000000;
+  padding: 0 4px;
+}
+
+.about-page__resume-desc {
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 14px;
+  color: #000000;
+  margin: 0 0 10px 0;
+  line-height: 1.4;
+}
+
+.about-page__resume-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Classic Windows 98 Raised Rectangular Button (uses system font for native OS control look) */
+.about-page__btn {
+  display: inline-block;
+  padding: 4px 14px;
+  background: #c0c0c0;
+  color: #000000;
+  text-decoration: none;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: normal;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  text-align: center;
+}
+
+.about-page__btn:hover {
+  background: #d4d0c8;
+}
+
+.about-page__btn:active {
+  border-top: 2px solid #000000;
+  border-left: 2px solid #000000;
+  border-bottom: 2px solid #ffffff;
+  border-right: 2px solid #ffffff;
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #dfdfdf;
+  padding: 5px 13px 3px 15px;
+}
+
+/* Responsive / Mobile */
+@media (max-width: 480px) {
+  .about-page {
+    width: calc(100% - 16px);
+    padding: 8px 4px 16px;
+  }
+
+  .about-page__resume-actions {
+    flex-direction: column;
+  }
+
+  .about-page__btn {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

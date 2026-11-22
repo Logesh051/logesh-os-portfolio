@@ -1,0 +1,1052 @@
+/* TechStacksPage - Authentic Windows Explorer Style */
+
+.explorer-app {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 6px;
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  box-sizing: border-box;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* 1. Menu Bar */
+.explorer-menubar {
+  display: flex;
+  align-items: center;
+  background: #c0c0c0;
+  padding: 1px 2px;
+  border-bottom: 1px solid #808080;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.explorer-menu-item {
+  position: relative;
+}
+
+.explorer-menu-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 2px 6px;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  cursor: pointer;
+  outline: none;
+}
+
+.explorer-menu-btn:hover,
+.explorer-menu-btn--active {
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  background: #d4d0c8;
+}
+
+.explorer-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+  min-width: 190px;
+  z-index: 1000;
+  padding: 2px 0;
+}
+
+.explorer-dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 3px 12px 3px 6px;
+  font-size: 11px;
+  cursor: pointer;
+  color: #000000;
+  white-space: nowrap;
+}
+
+.explorer-dropdown-item:hover,
+.explorer-dropdown-item--active {
+  background: #000080;
+  color: #ffffff;
+}
+
+.explorer-dropdown-check {
+  width: 16px;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.explorer-dropdown-shortcut {
+  margin-left: auto;
+  padding-left: 16px;
+  font-size: 10px;
+  color: #606060;
+}
+
+.explorer-dropdown-item:hover .explorer-dropdown-shortcut {
+  color: #dfdfdf;
+}
+
+.explorer-dropdown-separator {
+  height: 1px;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  margin: 3px 2px;
+}
+
+/* 2. Toolbar & Address Bar */
+.explorer-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #c0c0c0;
+  padding: 3px 4px;
+  border-bottom: 1px solid #808080;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.explorer-toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.explorer-tool-btn {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 22px;
+  padding: 0 5px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  cursor: pointer;
+  outline: none;
+}
+
+.explorer-tool-btn:active:not(:disabled),
+.explorer-tool-btn--pressed {
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  background: #dfdfdf;
+}
+
+.explorer-tool-btn:disabled {
+  color: #808080;
+  cursor: default;
+}
+
+.explorer-tool-btn:disabled svg {
+  opacity: 0.4;
+}
+
+.explorer-tool-label {
+  font-size: 11px;
+}
+
+.explorer-tool-separator {
+  width: 1px;
+  height: 18px;
+  background: #808080;
+  border-right: 1px solid #ffffff;
+  margin: 0 3px;
+}
+
+.explorer-address-bar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 220px;
+  position: relative;
+}
+
+.explorer-address-label {
+  font-size: 11px;
+  color: #000000;
+  flex-shrink: 0;
+}
+
+.explorer-address-input-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 22px;
+  background: #ffffff;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 0 1px 0 3px;
+  box-sizing: border-box;
+}
+
+.explorer-address-icon {
+  flex-shrink: 0;
+  margin-right: 3px;
+}
+
+.explorer-address-input-field {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  background: transparent;
+  padding: 0;
+  min-width: 60px;
+}
+
+.explorer-address-dropdown-btn {
+  width: 16px;
+  height: 18px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  font-size: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.explorer-address-dropdown-btn:active {
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+}
+
+.explorer-address-go-btn {
+  height: 22px;
+  padding: 0 6px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+  color: #000000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.explorer-address-go-btn:active {
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+}
+
+.explorer-address-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 54px;
+  right: 36px;
+  background: #ffffff;
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.4);
+  z-index: 1005;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.explorer-address-dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 6px;
+  font-size: 11px;
+  color: #000000;
+  cursor: pointer;
+  user-select: none;
+}
+
+.explorer-address-dropdown-option:hover {
+  background: #000080;
+  color: #ffffff;
+}
+
+/* 3. Main Split Body */
+.explorer-body {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  min-height: 0;
+  overflow: hidden;
+  padding: 3px 4px;
+  gap: 2px;
+}
+
+/* Left Navigation Pane (Folders) */
+.explorer-left-pane {
+  width: 220px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.explorer-pane-header {
+  height: 18px;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  background: #c0c0c0;
+  font-size: 11px;
+  font-weight: bold;
+  color: #000000;
+  border-bottom: 1px solid #808080;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.explorer-tree {
+  flex: 1;
+  background: #ffffff;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 4px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+}
+
+.explorer-tree-root {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 2px;
+  font-weight: bold;
+  font-size: 11px;
+  user-select: none;
+  color: #000000;
+}
+
+.explorer-tree-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 9px;
+  height: 9px;
+  border: 1px solid #808080;
+  background: #ffffff;
+  font-size: 9px;
+  line-height: 1;
+  font-family: monospace;
+  color: #000000;
+  margin-right: 2px;
+}
+
+.explorer-tree-branches {
+  margin-left: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.explorer-tree-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 4px;
+  font-size: 11px;
+  cursor: pointer;
+  user-select: none;
+  color: #000000;
+  outline: none;
+}
+
+.explorer-tree-connector {
+  font-family: monospace;
+  font-size: 11px;
+  color: #808080;
+  letter-spacing: -1px;
+}
+
+.explorer-tree-icon {
+  flex-shrink: 0;
+}
+
+.explorer-tree-label {
+  padding: 1px 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.explorer-tree-item:hover .explorer-tree-label:not(.explorer-tree-label--selected) {
+  background: #e0e0e0;
+}
+
+.explorer-tree-label--selected {
+  background: #000080 !important;
+  color: #ffffff !important;
+}
+
+/* Vertical Splitter */
+.explorer-splitter {
+  width: 4px;
+  background: #c0c0c0;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #808080;
+  flex-shrink: 0;
+}
+
+/* Right Content Pane (Details View) */
+.explorer-right-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.explorer-list-view {
+  flex: 1;
+  background: #ffffff;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  overflow-y: auto;
+  overflow-x: auto;
+  min-height: 0;
+}
+
+.explorer-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+}
+
+.explorer-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #c0c0c0;
+}
+
+.explorer-th {
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: normal;
+  text-align: left;
+  user-select: none;
+  cursor: pointer;
+  color: #000000;
+}
+
+.explorer-th:active {
+  border-top: 1px solid #000000;
+  border-left: 1px solid #000000;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+}
+
+.explorer-th--name {
+  width: 140px;
+}
+
+.explorer-th--type {
+  width: 160px;
+}
+
+.explorer-th--usedin {
+  width: auto;
+}
+
+.explorer-th-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.explorer-sort-arrow {
+  font-size: 8px;
+  margin-left: 4px;
+}
+
+.explorer-tr {
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+
+.explorer-tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.explorer-tr:hover:not(.explorer-tr--selected) {
+  background: #eef2f8;
+}
+
+.explorer-tr--selected {
+  background: #000080 !important;
+  color: #ffffff !important;
+}
+
+.explorer-td {
+  padding: 3px 6px;
+  font-size: 11px;
+  line-height: 1.35;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: top;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.explorer-tr--selected .explorer-td {
+  border-bottom: 1px solid #000080;
+  color: #ffffff !important;
+}
+
+.explorer-td--name {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+}
+
+.explorer-row-icon {
+  flex-shrink: 0;
+}
+
+.explorer-tr--selected .explorer-row-icon path {
+  fill: #ffffff;
+}
+
+.explorer-td--type {
+  color: #222222;
+}
+
+.explorer-td--usedin {
+  color: #111111;
+  word-break: break-word;
+}
+
+/* List View Mode */
+.explorer-list-mode {
+  flex: 1;
+  background: #ffffff;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 6px;
+  overflow-y: auto;
+  overflow-x: auto;
+  min-height: 0;
+}
+
+.explorer-list-grid {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 2px 14px;
+  max-height: 100%;
+}
+
+.explorer-list-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 6px;
+  width: 220px;
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.explorer-list-item:hover {
+  background: #eef2f8;
+}
+
+.explorer-list-item--selected {
+  background: #000080 !important;
+  color: #ffffff !important;
+}
+
+.explorer-list-item--selected .explorer-row-icon path {
+  fill: #ffffff;
+}
+
+.explorer-list-item-name {
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.explorer-list-item-type {
+  font-size: 10px;
+  color: #666666;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.explorer-list-item--selected .explorer-list-item-type {
+  color: #ffff00;
+}
+
+/* Large Icons View Mode */
+.explorer-icons-mode {
+  flex: 1;
+  background: #ffffff;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 12px;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.explorer-icons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 16px 10px;
+}
+
+.explorer-icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 6px 4px;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+}
+
+.explorer-icon-item:hover {
+  background: #eef2f8;
+  border: 1px dotted #808080;
+}
+
+.explorer-icon-item--selected {
+  background: #000080 !important;
+  color: #ffffff !important;
+  border: 1px dotted #ffffff;
+}
+
+.explorer-icon-graphic {
+  margin-bottom: 4px;
+}
+
+.explorer-icon-label {
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.explorer-icon-type {
+  font-size: 9px;
+  color: #555555;
+  margin-top: 2px;
+}
+
+.explorer-icon-item--selected .explorer-icon-type {
+  color: #ffff00;
+}
+
+/* Skill Properties Modal */
+.explorer-props-window {
+  width: min(440px, 94vw);
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+}
+
+.explorer-props-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--win-titlebar, #000080);
+  color: var(--win-titlebar-text, #ffffff);
+  padding: 2px 4px;
+  font-weight: bold;
+}
+
+.explorer-props-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 6px 6px 0;
+  background: #c0c0c0;
+  border-bottom: 1px solid #ffffff;
+}
+
+.explorer-props-tab-btn {
+  padding: 3px 10px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #000000;
+  border-bottom: none;
+  font-size: 11px;
+  cursor: pointer;
+  outline: none;
+}
+
+.explorer-props-tab-btn--active {
+  background: #dfdfdf;
+  font-weight: bold;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #000000;
+  margin-bottom: -1px;
+  padding-bottom: 4px;
+}
+
+.explorer-props-body {
+  padding: 10px;
+  background: #dfdfdf;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #808080;
+  border-right: 1px solid #808080;
+  margin: 0 6px 6px;
+  min-height: 180px;
+}
+
+.explorer-props-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #808080;
+}
+
+.explorer-props-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: #000000;
+}
+
+.explorer-props-row {
+  display: flex;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.explorer-props-label {
+  width: 100px;
+  font-weight: bold;
+  color: #333333;
+  flex-shrink: 0;
+}
+
+.explorer-props-value {
+  color: #000000;
+  flex: 1;
+}
+
+.explorer-props-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 6px 8px 8px;
+  background: #c0c0c0;
+}
+
+/* Explorer Error Dialog */
+.explorer-error-box {
+  width: min(380px, 92vw);
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.6);
+  font-family: Tahoma, "MS Sans Serif", Arial, sans-serif;
+}
+
+.explorer-error-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--win-titlebar, #000080);
+  color: var(--win-titlebar-text, #ffffff);
+  padding: 2px 4px;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+.explorer-error-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 14px;
+  font-size: 11px;
+  color: #000000;
+  line-height: 1.4;
+}
+
+.explorer-error-icon {
+  flex-shrink: 0;
+}
+
+.explorer-error-actions {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 12px;
+}
+
+/* 4. Explorer Status Bar */
+.explorer-statusbar {
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  padding: 2px 4px 3px;
+  background: #c0c0c0;
+  border-top: 1px solid #808080;
+  flex-shrink: 0;
+  user-select: none;
+  font-size: 11px;
+}
+
+.explorer-status-pane {
+  background: #c0c0c0;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  padding: 1px 6px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 18px;
+  box-sizing: border-box;
+}
+
+.explorer-status-pane--count {
+  width: 95px;
+  flex-shrink: 0;
+}
+
+.explorer-status-pane--selected {
+  flex: 1;
+  min-width: 0;
+}
+
+.explorer-status-pane--zone {
+  width: 110px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.explorer-zone-icon {
+  flex-shrink: 0;
+}
+
+.explorer-status-notif {
+  color: #000080;
+  font-weight: bold;
+}
+
+/* Modal Dialog */
+.explorer-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.explorer-modal {
+  width: min(400px, 92vw);
+  background: #c0c0c0;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-bottom: 2px solid #000000;
+  border-right: 2px solid #000000;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.6);
+}
+
+.explorer-modal-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--win-titlebar);
+  color: var(--win-titlebar-text);
+  padding: 2px 4px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.explorer-modal-close {
+  width: 16px;
+  height: 14px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  font-size: 9px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.explorer-modal-body {
+  padding: 12px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.explorer-modal-body p {
+  margin: 0 0 8px 0;
+}
+
+.explorer-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.explorer-modal-ok-btn {
+  padding: 3px 18px;
+  font-family: Tahoma, "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+  cursor: pointer;
+}
+
+/* 5. Responsive / Mobile Styles */
+@media (max-width: 768px) {
+  .explorer-app {
+    margin: 2px;
+  }
+
+  .explorer-toolbar {
+    padding: 2px;
+    gap: 4px;
+  }
+
+  .explorer-tool-label {
+    display: none;
+  }
+
+  .explorer-address-bar {
+    min-width: 140px;
+  }
+
+  .explorer-body {
+    flex-direction: column;
+    padding: 2px;
+  }
+
+  .explorer-left-pane {
+    width: 100%;
+    max-height: 115px;
+    flex-shrink: 0;
+  }
+
+  .explorer-tree {
+    padding: 2px;
+  }
+
+  .explorer-tree-branches {
+    margin-left: 10px;
+  }
+
+  .explorer-splitter {
+    display: none;
+  }
+
+  .explorer-right-pane {
+    flex: 1;
+    min-height: 200px;
+  }
+
+  .explorer-table {
+    min-width: 480px;
+  }
+
+  .explorer-th--name {
+    width: 110px;
+  }
+
+  .explorer-th--type {
+    width: 130px;
+  }
+
+  .explorer-status-pane--count {
+    width: 75px;
+  }
+
+  .explorer-status-pane--zone {
+    display: none;
+  }
+}
