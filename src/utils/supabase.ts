@@ -7,8 +7,9 @@ export interface SnakeScore {
   created_at?: string;
 }
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const rawUrl = import.meta.env.VITE_SUPABASE_URL || '';
+export const supabaseUrl = rawUrl.replace(/\/rest\/v1\/?$/, '').replace(/\/$/, '');
+export const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
 let supabaseInstance: SupabaseClient | null = null;
 
@@ -61,7 +62,13 @@ export const getLeaderboard = async (limit = 10): Promise<FetchResult> => {
       .limit(limit);
 
     if (error) {
-      console.error('Supabase fetch error:', error);
+      if (error.code === 'PGRST205') {
+        return {
+          data: [],
+          error: 'Table not found. Please execute the setup SQL.',
+          configured: true,
+        };
+      }
       return { data: [], error: error.message, configured: true };
     }
 
@@ -121,7 +128,13 @@ export const submitScore = async (
       .select();
 
     if (error) {
-      console.error('Supabase submit error:', error);
+      if (error.code === 'PGRST205') {
+        return {
+          success: false,
+          error: 'Database table snake_scores not found. Run setup SQL.',
+          configured: true,
+        };
+      }
       return {
         success: false,
         error: error.message || 'Failed to submit score.',

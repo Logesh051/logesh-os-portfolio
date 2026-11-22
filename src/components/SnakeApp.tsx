@@ -103,6 +103,10 @@ export const SnakeApp: React.FC<Props> = ({
   const foodRef = useRef<Point>({ x: 5, y: 5 });
   const gameLoopTimerRef = useRef<number | null>(null);
 
+  // Session duplicate prevention
+  const currentGameIdRef = useRef<string>(Date.now().toString());
+  const submittedGameIdRef = useRef<string | null>(null);
+
   // Check if player name prompt is needed on launch
   useEffect(() => {
     if (isOpen) {
@@ -274,9 +278,9 @@ export const SnakeApp: React.FC<Props> = ({
 
     // Check Food Collision
     if (newHead.x === foodRef.current.x && newHead.y === foodRef.current.y) {
-      // Eat Food
+      // Eat Food — EXACTLY +1 POINT
       setScore(prev => {
-        const nextScore = prev + 10;
+        const nextScore = prev + 1;
         setBestScore(currBest => {
           if (nextScore > currBest) {
             localStorage.setItem('logesh_os_snake_best', String(nextScore));
@@ -306,8 +310,13 @@ export const SnakeApp: React.FC<Props> = ({
     setSubmitStatus(null);
   };
 
-  // Start / Restart game
-  const startGame = useCallback(() => {
+  // Start with specific direction (automatic start on movement key)
+  const startGameWithDirection = useCallback((initialDir: Direction) => {
+    // Prevent immediate reverse collision into body (initial snake points UP, body is DOWN)
+    if (initialDir === 'DOWN') {
+      return;
+    }
+
     if (gameLoopTimerRef.current) {
       window.clearInterval(gameLoopTimerRef.current);
       gameLoopTimerRef.current = null;
@@ -317,9 +326,10 @@ export const SnakeApp: React.FC<Props> = ({
       { x: 10, y: 11 },
       { x: 10, y: 12 },
     ];
-    dirRef.current = 'UP';
-    nextDirRef.current = 'UP';
+    dirRef.current = initialDir;
+    nextDirRef.current = initialDir;
     foodRef.current = spawnFood();
+    currentGameIdRef.current = Date.now().toString();
     setScore(0);
     setGameState('PLAYING');
     setHasSubmitted(false);
@@ -328,6 +338,11 @@ export const SnakeApp: React.FC<Props> = ({
 
     gameLoopTimerRef.current = window.setInterval(gameTick, TICK_MS);
   }, [drawGame, gameTick, spawnFood]);
+
+  // Start / Restart game with default UP
+  const startGame = useCallback(() => {
+    startGameWithDirection('UP');
+  }, [startGameWithDirection]);
 
   // Pause / Resume
   const togglePause = useCallback(() => {
@@ -354,18 +369,25 @@ export const SnakeApp: React.FC<Props> = ({
     }
   };
 
-  // Handle Score Submission
+  // Handle Score Submission (with session duplicate prevention)
   const handleSubmitScore = async () => {
-    if (hasSubmitted || !playerName) return;
+    if (hasSubmitted || submittedGameIdRef.current === currentGameIdRef.current || !playerName) {
+      return;
+    }
     setSubmitStatus('Submitting score to Leaderboard...');
+    submittedGameIdRef.current = currentGameIdRef.current;
+    setHasSubmitted(true);
+
     const res = await submitScore(playerName, score);
     if (res.success) {
-      setHasSubmitted(true);
       setSubmitStatus('Score posted to Hall of Fame!');
       onScoreSubmitted?.();
       loadLeaderboard();
     } else {
       setSubmitStatus(res.error || 'Failed to submit score.');
+      // Allow retry if it failed
+      submittedGameIdRef.current = null;
+      setHasSubmitted(false);
     }
   };
 
@@ -378,9 +400,19 @@ export const SnakeApp: React.FC<Props> = ({
     else if (newDir === 'RIGHT' && cur !== 'LEFT') nextDirRef.current = 'RIGHT';
   }, []);
 
+  // Handle Touch Direction (also starts game automatically if in READY state)
+  const handleTouchDirection = useCallback((targetDir: Direction) => {
+    if (gameState === 'READY') {
+      startGameWithDirection(targetDir);
+    } else if (gameState === 'PLAYING') {
+      changeDirection(targetDir);
+    }
+  }, [gameState, startGameWithDirection, changeDirection]);
+
   // Keyboard controls listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Ensure keyboard controls work ONLY when Snake.exe is active and not minimized
       if (!isOpen || isMinimized || !isActive) return;
 
       if (e.key === 'F2') {
@@ -394,26 +426,58 @@ export const SnakeApp: React.FC<Props> = ({
         return;
       }
 
-      if (gameState !== 'PLAYING') return;
+      const isUp =
+        ['ArrowUp', 'KeyW'].includes(e.code) ||
+        e.key === 'ArrowUp' ||
+        e.key === 'w' ||
+        e.key === 'W';
+      const isDown =
+        ['ArrowDown', 'KeyS'].includes(e.code) ||
+        e.key === 'ArrowDown' ||
+        e.key === 's' ||
+        e.key === 'S';
+      const isLeft =
+        ['ArrowLeft', 'KeyA'].includes(e.code) ||
+        e.key === 'ArrowLeft' ||
+        e.key === 'a' ||
+        e.key === 'A';
+      const isRight =
+        ['ArrowRight', 'KeyD'].includes(e.code) ||
+        e.key === 'ArrowRight' ||
+        e.key === 'd' ||
+        e.key === 'D';
 
-      if (['ArrowUp', 'KeyW', 'w', 'W'].includes(e.code) || e.key === 'ArrowUp') {
+      if (isUp || isDown || isLeft || isRight) {
         e.preventDefault();
-        changeDirection('UP');
-      } else if (['ArrowDown', 'KeyS', 's', 'S'].includes(e.code) || e.key === 'ArrowDown') {
-        e.preventDefault();
-        changeDirection('DOWN');
-      } else if (['ArrowLeft', 'KeyA', 'a', 'A'].includes(e.code) || e.key === 'ArrowLeft') {
-        e.preventDefault();
-        changeDirection('LEFT');
-      } else if (['ArrowRight', 'KeyD', 'd', 'D'].includes(e.code) || e.key === 'ArrowRight') {
-        e.preventDefault();
-        changeDirection('RIGHT');
+        const targetDir: Direction = isUp
+          ? 'UP'
+          : isDown
+          ? 'DOWN'
+          : isLeft
+          ? 'LEFT'
+          : 'RIGHT';
+
+        if (gameState === 'READY') {
+          // Automatic Game Start on first valid movement key
+          startGameWithDirection(targetDir);
+        } else if (gameState === 'PLAYING') {
+          changeDirection(targetDir);
+        }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, isMinimized, isActive, gameState, startGame, togglePause, changeDirection]);
+  }, [
+    isOpen,
+    isMinimized,
+    isActive,
+    gameState,
+    startGame,
+    startGameWithDirection,
+    togglePause,
+    changeDirection,
+  ]);
 
   // Initial render when game becomes ready
   useEffect(() => {
@@ -652,6 +716,24 @@ export const SnakeApp: React.FC<Props> = ({
                   </div>
                 )}
 
+                {gameState === 'READY' && (
+                  <div
+                    className="snake-board-overlay"
+                    style={{ background: 'rgba(10, 20, 10, 0.45)', cursor: 'pointer' }}
+                    onClick={startGame}
+                  >
+                    <h3 className="snake-overlay-title" style={{ fontSize: '16px' }}>
+                      READY
+                    </h3>
+                    <p style={{ color: '#00ff00', fontSize: '11px', margin: 0, fontWeight: 'bold' }}>
+                      Press any Arrow key or W/A/S/D to move
+                    </p>
+                    <span style={{ fontSize: '10px', color: '#cccccc' }}>
+                      (or click Play / F2)
+                    </span>
+                  </div>
+                )}
+
                 {gameState === 'PAUSED' && (
                   <div className="snake-board-overlay">
                     <h3 className="snake-overlay-title">GAME PAUSED</h3>
@@ -704,7 +786,7 @@ export const SnakeApp: React.FC<Props> = ({
                     className="snake-dpad-btn"
                     onPointerDown={e => {
                       e.preventDefault();
-                      changeDirection('UP');
+                      handleTouchDirection('UP');
                     }}
                     aria-label="Up"
                   >
@@ -716,7 +798,7 @@ export const SnakeApp: React.FC<Props> = ({
                     className="snake-dpad-btn"
                     onPointerDown={e => {
                       e.preventDefault();
-                      changeDirection('LEFT');
+                      handleTouchDirection('LEFT');
                     }}
                     aria-label="Left"
                   >
@@ -726,7 +808,7 @@ export const SnakeApp: React.FC<Props> = ({
                     className="snake-dpad-btn"
                     onPointerDown={e => {
                       e.preventDefault();
-                      changeDirection('DOWN');
+                      handleTouchDirection('DOWN');
                     }}
                     aria-label="Down"
                   >
@@ -736,7 +818,7 @@ export const SnakeApp: React.FC<Props> = ({
                     className="snake-dpad-btn"
                     onPointerDown={e => {
                       e.preventDefault();
-                      changeDirection('RIGHT');
+                      handleTouchDirection('RIGHT');
                     }}
                     aria-label="Right"
                   >
@@ -799,13 +881,15 @@ export const SnakeApp: React.FC<Props> = ({
             Player: {playerName || '(None)'}
           </div>
           <div className="snake-status-cell snake-status-cell--main">
-            {gameState === 'PLAYING'
+            {gameState === 'READY'
+              ? 'Ready — Press any Arrow key or W/A/S/D to start'
+              : gameState === 'PLAYING'
               ? 'Playing — Use Arrow keys or WASD'
               : gameState === 'PAUSED'
-              ? 'Paused'
+              ? 'Paused — Press P to resume'
               : gameState === 'GAMEOVER'
-              ? 'Game Over — Click Submit or Play Again'
-              : 'Press F2 or Play to begin'}
+              ? 'Game Over — Click Submit or press F2 to replay'
+              : 'Press F2 or Arrow key to begin'}
           </div>
           <div className="snake-status-cell">
             Grid: 20x20
