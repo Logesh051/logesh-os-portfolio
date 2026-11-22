@@ -56,7 +56,7 @@ export const SnakeApp: React.FC<Props> = ({
     const taskbarH = 28;
     const defaultW = isMobile
       ? Math.max(280, window.innerWidth - 8)
-      : Math.min(460, window.innerWidth - 20);
+      : Math.min(470, window.innerWidth - 20);
     const defaultH = isMobile
       ? Math.max(320, window.innerHeight - taskbarH - 12)
       : Math.min(560, window.innerHeight - taskbarH - 40);
@@ -80,6 +80,7 @@ export const SnakeApp: React.FC<Props> = ({
     );
   });
   const [nameInput, setNameInput] = useState<string>('');
+  const [nameError, setNameError] = useState<string | null>(null);
   const [score, setScore] = useState<number>(0);
   const [bestScore, setBestScore] = useState<number>(() => {
     if (typeof window !== 'undefined') {
@@ -312,6 +313,12 @@ export const SnakeApp: React.FC<Props> = ({
 
   // Start with specific direction (automatic start on movement key)
   const startGameWithDirection = useCallback((initialDir: Direction) => {
+    // Require valid player handle before starting game
+    if (!playerName || !/^[a-zA-Z0-9]{3,16}$/.test(playerName)) {
+      setGameState('NAME_PROMPT');
+      return;
+    }
+
     // Prevent immediate reverse collision into body (initial snake points UP, body is DOWN)
     if (initialDir === 'DOWN') {
       return;
@@ -337,7 +344,7 @@ export const SnakeApp: React.FC<Props> = ({
     drawGame();
 
     gameLoopTimerRef.current = window.setInterval(gameTick, TICK_MS);
-  }, [drawGame, gameTick, spawnFood]);
+  }, [drawGame, gameTick, spawnFood, playerName]);
 
   // Start / Restart game with default UP
   const startGame = useCallback(() => {
@@ -358,20 +365,46 @@ export const SnakeApp: React.FC<Props> = ({
     }
   }, [gameState, gameTick]);
 
+  // Handle Player Name Input Change with Validation
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setNameInput(val);
+    const trimmed = val.trim();
+    if (/[^a-zA-Z0-9]/.test(val)) {
+      setNameError('Special characters are not allowed.');
+    } else if (trimmed.length > 0 && trimmed.length < 3) {
+      setNameError('Name must be at least 3 characters.');
+    } else {
+      setNameError(null);
+    }
+  };
+
   // Handle Player Name Submission
   const handleSaveName = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     const trimmed = nameInput.trim();
-    if (trimmed.length >= 3 && trimmed.length <= 16) {
-      setPlayerName(trimmed);
-      sessionStorage.setItem('logesh_os_snake_player', trimmed);
-      setGameState('READY');
+    if (!trimmed || trimmed.length < 3 || trimmed.length > 16) {
+      setNameError('Name must be between 3 and 16 characters.');
+      return;
     }
+    if (!/^[a-zA-Z0-9]+$/.test(trimmed)) {
+      setNameError('Special characters are not allowed.');
+      return;
+    }
+    setNameError(null);
+    setPlayerName(trimmed);
+    sessionStorage.setItem('logesh_os_snake_player', trimmed);
+    setGameState('READY');
   };
 
-  // Handle Score Submission (with session duplicate prevention)
+  // Handle Score Submission (with session duplicate prevention and validation)
   const handleSubmitScore = async () => {
     if (hasSubmitted || submittedGameIdRef.current === currentGameIdRef.current || !playerName) {
+      return;
+    }
+    const trimmed = playerName.trim();
+    if (!/^[a-zA-Z0-9]{3,16}$/.test(trimmed)) {
+      setSubmitStatus('Name must be 3-16 letters and numbers with no special characters.');
       return;
     }
     setSubmitStatus('Submitting score to Leaderboard...');
@@ -626,35 +659,12 @@ export const SnakeApp: React.FC<Props> = ({
             className="snake-menu-btn"
             onClick={() => {
               setNameInput(playerName);
+              setNameError(null);
               setGameState('NAME_PROMPT');
             }}
           >
             Change Player
           </button>
-        </div>
-
-        {/* Score Header */}
-        <div className="snake-score-header">
-          <div className="snake-lcd-panel">
-            <span>SCORE:</span>
-            <span className="snake-lcd-display">
-              {String(score).padStart(4, '0')}
-            </span>
-          </div>
-
-          <button
-            className="snake-btn-action"
-            onClick={startGame}
-          >
-            {gameState === 'PLAYING' ? 'Restart' : 'Play (F2)'}
-          </button>
-
-          <div className="snake-lcd-panel">
-            <span>BEST:</span>
-            <span className="snake-lcd-display">
-              {String(bestScore).padStart(4, '0')}
-            </span>
-          </div>
         </div>
 
         {/* Tabs Bar */}
@@ -679,8 +689,10 @@ export const SnakeApp: React.FC<Props> = ({
         <div className="snake-main-body">
           {activeTab === 'game' ? (
             <>
-              {/* Canvas Frame */}
-              <div className="snake-board-frame">
+              {/* Game Area: Board + Side Live Score Card */}
+              <div className="snake-game-area">
+                {/* Canvas Frame */}
+                <div className="snake-board-frame">
                 <canvas
                   ref={canvasRef}
                   width={GRID_SIZE * CELL_SIZE}
@@ -695,20 +707,28 @@ export const SnakeApp: React.FC<Props> = ({
                     <p style={{ color: '#dfdfdf', fontSize: '11px', margin: 0 }}>
                       Enter your arcade handle (3-16 chars):
                     </p>
-                    <form onSubmit={handleSaveName} style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
+                    <form onSubmit={handleSaveName} style={{ display: 'flex', flexDirection: 'column', gap: '6px', alignItems: 'center' }}>
                       <input
                         type="text"
-                        className="snake-name-input"
+                        className={`snake-name-input ${nameError ? 'snake-name-input--error' : ''}`}
                         maxLength={16}
-                        placeholder="PLAYER 1"
+                        placeholder="PLAYER1"
                         value={nameInput}
-                        onChange={e => setNameInput(e.target.value)}
+                        onChange={handleNameChange}
                         autoFocus
                       />
+                      <p className="snake-name-helper">
+                        Use only letters and numbers. Special characters are not allowed.
+                      </p>
+                      {nameError && (
+                        <p className="snake-name-error" role="alert">
+                          {nameError}
+                        </p>
+                      )}
                       <button
                         type="submit"
                         className="snake-btn-action"
-                        disabled={nameInput.trim().length < 3}
+                        disabled={nameInput.trim().length < 3 || /[^a-zA-Z0-9]/.test(nameInput.trim())}
                       >
                         Start Game
                       </button>
@@ -776,7 +796,32 @@ export const SnakeApp: React.FC<Props> = ({
                 )}
               </div>
 
-              {/* Mobile Touch D-Pad */}
+              {/* Live Score Card (Vertically beside board on desktop, below on small screens) */}
+              <div className="snake-score-card">
+                <div className="snake-score-group">
+                  <span className="snake-score-label">SCORE</span>
+                  <span className="snake-lcd-display snake-lcd-display--score">
+                    {String(score).padStart(4, '0')}
+                  </span>
+                </div>
+
+                <div className="snake-score-group">
+                  <span className="snake-score-label">BEST</span>
+                  <span className="snake-lcd-display">
+                    {String(bestScore).padStart(4, '0')}
+                  </span>
+                </div>
+
+                <button
+                  className="snake-btn-action snake-score-btn"
+                  onClick={startGame}
+                >
+                  {gameState === 'PLAYING' ? 'Restart' : 'Play (F2)'}
+                </button>
+              </div>
+            </div>
+
+            {/* Mobile Touch D-Pad */}
               <div
                 className="snake-touch-controls"
                 onTouchStart={e => e.stopPropagation()}
