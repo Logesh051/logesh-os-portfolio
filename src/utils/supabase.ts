@@ -47,6 +47,7 @@ export interface FetchResult {
   configured: boolean;
 }
 
+// 1. Public Read-Only Leaderboard Fetch (Protected by RLS SELECT policy)
 export const getLeaderboard = async (limit = 10): Promise<FetchResult> => {
   const client = getSupabaseClient();
   if (!client) {
@@ -86,9 +87,12 @@ export interface SubmitResult {
   inserted?: SnakeScore;
 }
 
+// 2. Secure Server-Side Score Submission via Supabase Edge Function
+// Direct public INSERT is disabled in PostgreSQL RLS. All writes are processed by the Edge Function.
 export const submitScore = async (
   playerName: string,
-  score: number
+  score: number,
+  sessionId?: string
 ): Promise<SubmitResult> => {
   const trimmed = playerName.trim();
   if (!trimmed || trimmed.length < 3 || trimmed.length > 16) {
@@ -116,28 +120,30 @@ export const submitScore = async (
     };
   }
 
+  const activeSessionId = sessionId || `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+
   try {
-    const { data, error } = await client
-      .from('snake_scores')
-      .insert([
-        {
-          player_name: trimmed,
-          score: Math.floor(score),
-        },
-      ])
-      .select();
+    const { data, error } = await client.functions.invoke('submit-score', {
+      body: {
+        player_name: trimmed,
+        score: Math.floor(score),
+        session_id: activeSessionId,
+      },
+    });
 
     if (error) {
-      if (error.code === 'PGRST205') {
-        return {
-          success: false,
-          error: 'Database table snake_scores not found. Run setup SQL.',
-          configured: true,
-        };
-      }
+      console.warn('Edge function invoke error:', error);
       return {
         success: false,
-        error: error.message || 'Failed to submit score.',
+        error: error.message || 'Edge function error. Check deployment status in SUPABASE_SETUP.md',
+        configured: true,
+      };
+    }
+
+    if (data?.error) {
+      return {
+        success: false,
+        error: data.error,
         configured: true,
       };
     }
@@ -146,18 +152,19 @@ export const submitScore = async (
       success: true,
       error: null,
       configured: true,
-      inserted: data?.[0] as SnakeScore,
+      inserted: data?.data as SnakeScore,
     };
   } catch (err: any) {
     console.error('Supabase submitScore exception:', err);
     return {
       success: false,
-      error: err.message || 'Network error',
+      error: err.message || 'Network error invoking score submission function',
       configured: true,
     };
   }
 };
 
+// 3. Realtime Leaderboard Subscription
 export const subscribeToLeaderboard = (onUpdate: () => void): (() => void) => {
   const client = getSupabaseClient();
   if (!client) return () => {};

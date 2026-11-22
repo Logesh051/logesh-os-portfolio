@@ -378,7 +378,7 @@ export const SnakeApp: React.FC<Props> = ({
     submittedGameIdRef.current = currentGameIdRef.current;
     setHasSubmitted(true);
 
-    const res = await submitScore(playerName, score);
+    const res = await submitScore(playerName, score, currentGameIdRef.current);
     if (res.success) {
       setSubmitStatus('Score posted to Hall of Fame!');
       onScoreSubmitted?.();
