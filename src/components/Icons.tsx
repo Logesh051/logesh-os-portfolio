@@ -357,3 +357,15 @@ export const LargeIconsViewIcon: React.FC<{ size?: number }> = ({ size = 16 }) =
     <rect x="9" y="9" width="5" height="5" fill="#f6d04d" stroke="#000000" strokeWidth="0.8" />
   </svg>
 );
+
+export const FoldersToggleIcon: React.FC<{ size?: number }> = ({ size = 16 }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width={size} height={size} style={{ imageRendering: 'pixelated' }}>
+    <rect x="1" y="2" width="6" height="12" fill="#ffffff" stroke="#808080" strokeWidth="0.8" />
+    <rect x="2" y="4" width="4" height="2" fill="#000080" />
+    <rect x="3" y="7" width="3" height="1" fill="#f6d04d" stroke="#000000" strokeWidth="0.5" />
+    <rect x="3" y="10" width="3" height="1" fill="#f6d04d" stroke="#000000" strokeWidth="0.5" />
+    <rect x="8" y="2" width="7" height="12" fill="#c0c0c0" stroke="#808080" strokeWidth="0.8" />
+    <rect x="10" y="4" width="4" height="2" fill="#808080" />
+    <rect x="10" y="8" width="4" height="2" fill="#808080" />
+  </svg>
+);

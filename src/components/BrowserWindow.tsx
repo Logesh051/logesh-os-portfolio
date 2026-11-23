@@ -300,7 +300,7 @@ const BrowserWindow: React.FC<Props> = ({
       case 'about':
         return <AboutPage />;
       case 'techstacks':
-        return <TechStacksPage />;
+        return <TechStacksPage onNavigate={onNavigate} />;
       case 'contact':
         return <ContactPage />;
       default:
