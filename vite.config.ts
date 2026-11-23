@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// GitHub Pages deploys under subpath /logesh-os-portfolio/
+// Use relative base so assets load correctly on custom domain (logesh.is-a.dev) and github.io subpath
 export default defineConfig({
-  base: process.env.GITHUB_PAGES ? '/logesh-os-portfolio/' : './',
+  base: './',
   plugins: [react()],
 })
