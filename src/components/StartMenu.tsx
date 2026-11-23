@@ -31,7 +31,7 @@ interface Props {
   onOpenDisplayProperties?: () => void;
 }
 
-type SubmenuType = 'programs' | 'documents' | 'settings' | 'find' | null;
+type SubmenuType = 'programs' | 'documents' | 'projects' | 'settings' | 'find' | null;
 
 const StartMenu: React.FC<Props> = ({
   onNavigate,
@@ -57,12 +57,14 @@ const StartMenu: React.FC<Props> = ({
 
   const rootItems = [
     { id: 'programs', label: 'Programs', icon: <ProgramsIcon size={24} />, hasSubmenu: true },
+    { id: 'projects', label: 'Projects', icon: <ProjectsIcon size={24} />, hasSubmenu: true },
     { id: 'documents', label: 'Documents', icon: <DocumentsIcon size={24} />, hasSubmenu: true },
     { id: 'settings', label: 'Settings', icon: <SettingsIcon size={24} />, hasSubmenu: true },
     { id: 'find', label: 'Find', icon: <FindIcon size={24} />, hasSubmenu: true },
     { id: 'help', label: 'Help', icon: <HelpIcon size={24} />, hasSubmenu: false },
     { id: 'run', label: 'Run...', icon: <RunIcon size={24} />, hasSubmenu: false },
     { id: 'separator', isSeparator: true },
+    { id: 'about', label: 'About Me', icon: <AboutIcon size={24} />, hasSubmenu: false },
     {
       id: 'shutdown',
       label: 'Shut Down...',
@@ -88,6 +90,9 @@ const StartMenu: React.FC<Props> = ({
       case 'programs':
         setActiveSubmenu(prev => (prev === 'programs' ? null : 'programs'));
         break;
+      case 'projects':
+        setActiveSubmenu(prev => (prev === 'projects' ? null : 'projects'));
+        break;
       case 'documents':
         setActiveSubmenu(prev => (prev === 'documents' ? null : 'documents'));
         break;
@@ -104,6 +109,10 @@ const StartMenu: React.FC<Props> = ({
         break;
       case 'run':
         if (onOpenRun) onOpenRun();
+        onClose();
+        break;
+      case 'about':
+        onNavigate('about');
         onClose();
         break;
       case 'shutdown':
@@ -138,12 +147,11 @@ const StartMenu: React.FC<Props> = ({
   // Keyboard navigation inside Start Menu
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const selectableRootIndices = [0, 1, 2, 3, 4, 5, 7]; // indexes excluding separator (6)
+      const selectableRootIndices = [0, 1, 2, 3, 4, 5, 6, 8, 9]; // indexes excluding separator (7)
 
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         if (activeSubmenu) {
-          // In submenu navigation
           setFocusedSubIndex(prev => prev + 1);
         } else {
           setFocusedRootIndex(prev => {
@@ -179,13 +187,26 @@ const StartMenu: React.FC<Props> = ({
       } else if (e.key === 'Enter') {
         e.preventDefault();
         if (activeSubmenu === 'programs') {
-          const progs = ['about', 'techstacks', 'projects', 'contact', 'camera'];
+          const progs = ['about', 'techstacks', 'projects', 'contact', 'camera', 'snake'];
           const chosen = progs[Math.max(0, focusedSubIndex)];
           if (chosen === 'camera') {
             if (onCameraClick) onCameraClick();
-          } else {
+          } else if (chosen === 'snake') {
+            if (onSnakeClick) onSnakeClick();
+          } else if (chosen) {
             onNavigate(chosen as SectionId);
           }
+          onClose();
+        } else if (activeSubmenu === 'projects') {
+          const projectList: SectionId[] = [
+            'projects',
+            'projects/cognifocus',
+            'projects/startup-valuation',
+            'projects/image-authenticity',
+            'projects/email-triage',
+          ];
+          const chosen = projectList[Math.max(0, focusedSubIndex)] || 'projects';
+          onNavigate(chosen);
           onClose();
         } else if (activeSubmenu === 'settings') {
           if (onOpenDisplayProperties) onOpenDisplayProperties();
@@ -212,7 +233,7 @@ const StartMenu: React.FC<Props> = ({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeSubmenu, focusedRootIndex, focusedSubIndex, onClose, onCameraClick, onNavigate, onOpenDisplayProperties, onOpenFind, onOpenHelp, onOpenRun, onShutDown]);
+  }, [activeSubmenu, focusedRootIndex, focusedSubIndex, onClose, onCameraClick, onSnakeClick, onNavigate, onOpenDisplayProperties, onOpenFind, onOpenHelp, onOpenRun, onShutDown]);
 
   return (
     <div className="start-menu win-raised" ref={menuRef} role="menu" aria-label="Start menu">
@@ -320,7 +341,54 @@ const StartMenu: React.FC<Props> = ({
                 </div>
               )}
 
-              {/* 2. Cascading Documents Submenu */}
+              {/* 2. Cascading Projects Submenu */}
+              {item.id === 'projects' && isSubmenuOpen && (
+                <div className="start-submenu start-submenu--projects win-raised" role="menu">
+                  <button
+                    className={`start-submenu__item ${focusedSubIndex === 0 ? 'start-submenu__item--focused' : ''}`}
+                    onClick={() => { onNavigate('projects'); onClose(); }}
+                    role="menuitem"
+                  >
+                    <ProjectsIcon size={20} />
+                    <span>Browse All Projects...</span>
+                  </button>
+                  <div className="start-menu__separator" />
+                  <button
+                    className={`start-submenu__item ${focusedSubIndex === 1 ? 'start-submenu__item--focused' : ''}`}
+                    onClick={() => { onNavigate('projects/cognifocus'); onClose(); }}
+                    role="menuitem"
+                  >
+                    <FileIcon size={16} />
+                    <span>CogniFocus.prj</span>
+                  </button>
+                  <button
+                    className={`start-submenu__item ${focusedSubIndex === 2 ? 'start-submenu__item--focused' : ''}`}
+                    onClick={() => { onNavigate('projects/startup-valuation'); onClose(); }}
+                    role="menuitem"
+                  >
+                    <FileIcon size={16} />
+                    <span>Startup_Valuation.prj</span>
+                  </button>
+                  <button
+                    className={`start-submenu__item ${focusedSubIndex === 3 ? 'start-submenu__item--focused' : ''}`}
+                    onClick={() => { onNavigate('projects/image-authenticity'); onClose(); }}
+                    role="menuitem"
+                  >
+                    <FileIcon size={16} />
+                    <span>Image_Authenticity.prj</span>
+                  </button>
+                  <button
+                    className={`start-submenu__item ${focusedSubIndex === 4 ? 'start-submenu__item--focused' : ''}`}
+                    onClick={() => { onNavigate('projects/email-triage'); onClose(); }}
+                    role="menuitem"
+                  >
+                    <FileIcon size={16} />
+                    <span>Email_Triage.prj</span>
+                  </button>
+                </div>
+              )}
+
+              {/* 3. Cascading Documents Submenu */}
               {item.id === 'documents' && isSubmenuOpen && (
                 <div className="start-submenu start-submenu--documents win-raised" role="menu">
                   {recentDocs.length === 0 ? (
@@ -351,7 +419,7 @@ const StartMenu: React.FC<Props> = ({
                 </div>
               )}
 
-              {/* 3. Cascading Settings Submenu */}
+              {/* 4. Cascading Settings Submenu */}
               {item.id === 'settings' && isSubmenuOpen && (
                 <div className="start-submenu start-submenu--settings win-raised" role="menu">
                   <button
@@ -379,7 +447,7 @@ const StartMenu: React.FC<Props> = ({
                 </div>
               )}
 
-              {/* 4. Cascading Find Submenu */}
+              {/* 5. Cascading Find Submenu */}
               {item.id === 'find' && isSubmenuOpen && (
                 <div className="start-submenu start-submenu--find win-raised" role="menu">
                   <button

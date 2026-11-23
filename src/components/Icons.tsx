@@ -131,13 +131,25 @@ export const BrowserIcon: React.FC<{ size?: number }> = ({ size = 16 }) => (
   </svg>
 );
 
-// Start menu icon (Windows flag style)
+// Start menu icon (Windows 98 / 2000 waving flag style)
 export const StartIcon: React.FC<{ size?: number }> = ({ size = 16 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width={size} height={size} style={{ imageRendering: 'pixelated' }}>
-    <rect x="1" y="1" width="6" height="6" fill="#ff0000"/>
-    <rect x="9" y="1" width="6" height="6" fill="#0000ff"/>
-    <rect x="1" y="9" width="6" height="6" fill="#00aa00"/>
-    <rect x="9" y="9" width="6" height="6" fill="#ffcc00"/>
+    {/* Authentic Windows 98 4-color waving flag */}
+    <path d="M1 2 C 3 1, 5 3, 7 2 L 7 7 C 5 8, 3 6, 1 7 Z" fill="#ff2222" stroke="#800000" strokeWidth="0.5"/>
+    <path d="M8 2 C 10 1, 13 3, 15 2 L 15 7 C 13 8, 10 6, 8 7 Z" fill="#0055ea" stroke="#000080" strokeWidth="0.5"/>
+    <path d="M1 8 C 3 7, 5 9, 7 8 L 7 13 C 5 14, 3 12, 1 13 Z" fill="#00aa00" stroke="#005500" strokeWidth="0.5"/>
+    <path d="M8 8 C 10 7, 13 9, 15 8 L 15 13 C 13 14, 10 12, 8 13 Z" fill="#ffcc00" stroke="#aa8800" strokeWidth="0.5"/>
+  </svg>
+);
+
+// System Tray Notification Info icon
+export const InfoIcon: React.FC<{ size?: number }> = ({ size = 14 }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width={size} height={size} style={{ imageRendering: 'pixelated' }}>
+    <circle cx="8" cy="8" r="6.5" fill="#0055ea" stroke="#000080" strokeWidth="1"/>
+    <rect x="7" y="4" width="2" height="2" fill="#ffffff"/>
+    <rect x="7" y="7" width="2" height="4" fill="#ffffff"/>
+    <rect x="6" y="7" width="1" height="1" fill="#ffffff"/>
+    <rect x="6" y="11" width="4" height="1" fill="#ffffff"/>
   </svg>
 );
 

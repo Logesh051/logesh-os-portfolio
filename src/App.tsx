@@ -13,6 +13,7 @@ import RunDialog from './components/RunDialog';
 import DisplayPropertiesDialog from './components/DisplayPropertiesDialog';
 import HelpDialog from './components/HelpDialog';
 import FindDialog from './components/FindDialog';
+import TaskManagerDialog from './components/TaskManagerDialog';
 import { addRecentDoc } from './utils/recentDocs';
 import './App.css';
 
@@ -66,6 +67,8 @@ const App: React.FC = () => {
   const [displayPropertiesOpen, setDisplayPropertiesOpen] = useState(false);
   const [helpDialogOpen, setHelpDialogOpen] = useState(false);
   const [findDialogOpen, setFindDialogOpen] = useState(false);
+  const [taskManagerOpen, setTaskManagerOpen] = useState(false);
+  const [volumeLevel, setVolumeLevel] = useState(80);
 
   // Show Desktop state
   const [minimizedByShowDesktop, setMinimizedByShowDesktop] = useState<{
@@ -318,6 +321,71 @@ const App: React.FC = () => {
     }
   }, [activeWindow, browserState.activeSection, browserState.isMinimized, browserState.isOpen, cameraDialogOpen, cameraMinimized, minimizeBrowser, openSection, restoreBrowser]);
 
+  const handleCascadeWindows = useCallback(() => {
+    if (browserState.isOpen && browserState.isMinimized) {
+      restoreBrowser();
+    }
+    if (cameraDialogOpen && cameraMinimized) {
+      setCameraMinimized(false);
+    }
+    if (snakeDialogOpen && snakeMinimized) {
+      setSnakeMinimized(false);
+    }
+    if (browserState.isOpen) {
+      setActiveWindow('browser');
+    } else if (cameraDialogOpen) {
+      setActiveWindow('camera');
+    } else if (snakeDialogOpen) {
+      setActiveWindow('snake');
+    }
+  }, [browserState.isOpen, browserState.isMinimized, cameraDialogOpen, cameraMinimized, restoreBrowser, snakeDialogOpen, snakeMinimized]);
+
+  const handleTileWindows = useCallback(() => {
+    if (browserState.isOpen && browserState.isMinimized) {
+      restoreBrowser();
+    }
+    if (cameraDialogOpen && cameraMinimized) {
+      setCameraMinimized(false);
+    }
+    if (snakeDialogOpen && snakeMinimized) {
+      setSnakeMinimized(false);
+    }
+    if (browserState.isOpen) {
+      setActiveWindow('browser');
+    } else if (cameraDialogOpen) {
+      setActiveWindow('camera');
+    } else if (snakeDialogOpen) {
+      setActiveWindow('snake');
+    }
+  }, [browserState.isOpen, browserState.isMinimized, cameraDialogOpen, cameraMinimized, restoreBrowser, snakeDialogOpen, snakeMinimized]);
+
+  const handleSwitchToTask = useCallback((taskId: string) => {
+    if (taskId === 'camera') {
+      setCameraDialogOpen(true);
+      setCameraMinimized(false);
+      setActiveWindow('camera');
+    } else if (taskId === 'snake') {
+      setSnakeDialogOpen(true);
+      setSnakeMinimized(false);
+      setActiveWindow('snake');
+    } else {
+      openSection(taskId as SectionId);
+      restoreBrowser();
+      setActiveWindow('browser');
+    }
+    setTaskManagerOpen(false);
+  }, [openSection, restoreBrowser]);
+
+  const handleEndTask = useCallback((taskId: string) => {
+    if (taskId === 'camera') {
+      handleCloseCamera();
+    } else if (taskId === 'snake') {
+      handleCloseSnake();
+    } else {
+      handleCloseBrowser();
+    }
+  }, [handleCloseBrowser, handleCloseCamera, handleCloseSnake]);
+
   // Global Keyboard Shortcuts (Alt+F4, Escape, Windows Key, ContextMenu)
   useEffect(() => {
     const handleGlobalKeyDown = (e: KeyboardEvent) => {
@@ -344,7 +412,39 @@ const App: React.FC = () => {
       // Alt + F4
       if (e.altKey && (e.key === 'F4' || e.code === 'F4')) {
         e.preventDefault();
-        if (runDialogOpen) {
+        if (taskManagerOpen) {
+          setTaskManagerOpen(false);
+        } else if (runDialogOpen) {
+          setRunDialogOpen(false);
+        } else if (displayPropertiesOpen) {
+          setDisplayPropertiesOpen(false);
+        } else if (helpDialogOpen) {
+          setHelpDialogOpen(false);
+        } else if (findDialogOpen) {
+          setFindDialogOpen(false);
+        } else if (showShutdownDialog) {
+          setShowShutdownDialog(false);
+        } else if (activeWindow === 'camera' && cameraDialogOpen && !cameraMinimized) {
+          handleCloseCamera();
+        } else if (activeWindow === 'snake' && snakeDialogOpen && !snakeMinimized) {
+          handleCloseSnake();
+        } else if (activeWindow === 'browser' && browserState.isOpen && !browserState.isMinimized) {
+          handleCloseBrowser();
+        } else if (startMenuOpen) {
+          setStartMenuOpen(false);
+        } else if (contextMenu.visible) {
+          setContextMenu(prev => ({ ...prev, visible: false }));
+        } else {
+          // Classic Windows behavior: Alt+F4 on desktop opens Shut Down dialog
+          setShowShutdownDialog(true);
+        }
+      }
+
+      // Escape key closes menus, dialogs, or selection
+      if (e.key === 'Escape') {
+        if (taskManagerOpen) {
+          setTaskManagerOpen(false);
+        } else if (runDialogOpen) {
           setRunDialogOpen(false);
         } else if (displayPropertiesOpen) {
           setDisplayPropertiesOpen(false);
@@ -410,6 +510,7 @@ const App: React.FC = () => {
     displayPropertiesOpen,
     helpDialogOpen,
     findDialogOpen,
+    taskManagerOpen,
   ]);
 
   const handleDesktopClick = (e: React.MouseEvent) => {
@@ -782,9 +883,16 @@ const App: React.FC = () => {
       {(() => {
         const taskbarTasks: TaskItem[] = [];
 
-        openSections.forEach(sec => {
+        const sectionsToInclude =
+          openSections.length > 0
+            ? openSections
+            : browserState.isOpen
+            ? [browserState.activeSection]
+            : [];
+
+        sectionsToInclude.forEach(sec => {
           let title = 'LOGESH_OS - About Me';
-          let iconType: 'about' | 'techstacks' | 'projects' | 'contact' | 'camera' = 'about';
+          let iconType: 'about' | 'techstacks' | 'projects' | 'contact' | 'camera' | 'snake' = 'about';
 
           if (sec === 'about') {
             title = 'LOGESH_OS - About Me';
@@ -792,7 +900,7 @@ const App: React.FC = () => {
           } else if (sec === 'techstacks') {
             title = 'LOGESH_OS - TechStacks';
             iconType = 'techstacks';
-          } else if (sec === 'projects') {
+          } else if (sec === 'projects' || sec.startsWith('projects/')) {
             title = 'LOGESH_OS - My Projects';
             iconType = 'projects';
           } else if (sec === 'contact') {
@@ -834,36 +942,57 @@ const App: React.FC = () => {
         }
 
         return (
-          <Taskbar
-            startMenuOpen={startMenuOpen}
-            onStartClick={() => setStartMenuOpen(prev => !prev)}
-            onQuickLaunch={handleQuickLaunch}
-            onShowDesktop={handleShowDesktop}
-            tasks={taskbarTasks}
-            onTaskClick={handleTaskClick}
-            soundMuted={isSoundMuted}
-            onToggleMute={() => setIsSoundMuted(prev => !prev)}
-            browserOpen={browserState.isOpen}
-            browserMinimized={browserState.isMinimized}
-            activeSection={browserState.activeSection}
-            onBrowserClick={handleTaskbarBrowserClick}
-            cameraOpen={cameraDialogOpen}
-            onCameraClick={() => {
-              if (!cameraDialogOpen) {
-                setCameraDialogOpen(true);
-                setCameraMinimized(false);
-                setActiveWindow('camera');
-              } else if (cameraMinimized) {
-                setCameraMinimized(false);
-                setActiveWindow('camera');
-              } else if (activeWindow === 'camera') {
-                setCameraMinimized(true);
-                setActiveWindow(browserState.isOpen && !browserState.isMinimized ? 'browser' : null);
-              } else {
-                setActiveWindow('camera');
-              }
-            }}
-          />
+          <>
+            <TaskManagerDialog
+              isOpen={taskManagerOpen}
+              onClose={() => setTaskManagerOpen(false)}
+              tasks={taskbarTasks}
+              onSwitchTo={handleSwitchToTask}
+              onEndTask={handleEndTask}
+              onNewTask={() => {
+                setTaskManagerOpen(false);
+                setRunDialogOpen(true);
+              }}
+            />
+
+            <Taskbar
+              startMenuOpen={startMenuOpen}
+              onStartClick={() => setStartMenuOpen(prev => !prev)}
+              onQuickLaunch={handleQuickLaunch}
+              onShowDesktop={handleShowDesktop}
+              tasks={taskbarTasks}
+              onTaskClick={handleTaskClick}
+              soundMuted={isSoundMuted}
+              onToggleMute={() => setIsSoundMuted(prev => !prev)}
+              volume={volumeLevel}
+              onVolumeChange={setVolumeLevel}
+              onOpenTaskManager={() => setTaskManagerOpen(true)}
+              onCascadeWindows={handleCascadeWindows}
+              onTileHorizontally={handleTileWindows}
+              onTileVertically={handleTileWindows}
+              onOpenDisplayProperties={() => setDisplayPropertiesOpen(true)}
+              browserOpen={browserState.isOpen}
+              browserMinimized={browserState.isMinimized}
+              activeSection={browserState.activeSection}
+              onBrowserClick={handleTaskbarBrowserClick}
+              cameraOpen={cameraDialogOpen}
+              onCameraClick={() => {
+                if (!cameraDialogOpen) {
+                  setCameraDialogOpen(true);
+                  setCameraMinimized(false);
+                  setActiveWindow('camera');
+                } else if (cameraMinimized) {
+                  setCameraMinimized(false);
+                  setActiveWindow('camera');
+                } else if (activeWindow === 'camera') {
+                  setCameraMinimized(true);
+                  setActiveWindow(browserState.isOpen && !browserState.isMinimized ? 'browser' : null);
+                } else {
+                  setActiveWindow('camera');
+                }
+              }}
+            />
+          </>
         );
       })()}
     </div>
