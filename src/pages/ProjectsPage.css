@@ -226,9 +226,12 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  flex: 1;
-  min-width: 240px;
+  flex-shrink: 0;
+  padding: 2px 6px;
+  border-bottom: 1px solid #808080;
+  background: #c0c0c0;
   position: relative;
+  box-sizing: border-box;
 }
 
 .proj-address-label {
@@ -1468,6 +1471,90 @@
   .proj-status-pane--zone {
     width: 90px;
   }
+}
+
+/* Copy Feedback Toast */
+.proj-copy-toast {
+  font-size: 10px;
+  color: #008000;
+  font-weight: bold;
+  padding: 2px 6px;
+  background: #ffffff;
+  border: 1px solid #808080;
+  white-space: nowrap;
+}
+
+/* Workflow Steps */
+.proj-workflow-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.proj-workflow-step {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 8px 10px;
+  background: #f8f8f8;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #808080;
+  border-right: 1px solid #808080;
+}
+
+.proj-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: #000080;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 11px;
+  font-family: Tahoma, Arial, sans-serif;
+  flex-shrink: 0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-bottom: 1px solid #000000;
+  border-right: 1px solid #000000;
+}
+
+.proj-step-content {
+  flex: 1;
+}
+
+.proj-step-title {
+  font-weight: bold;
+  font-size: 11px;
+  color: #000080;
+  margin-bottom: 2px;
+}
+
+.proj-step-desc {
+  font-size: 11px;
+  line-height: 1.4;
+  color: #222222;
+  margin: 0;
+}
+
+/* Terminal / Command Box */
+.proj-terminal-box {
+  background: #0c0c0c;
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-bottom: 2px solid #ffffff;
+  border-right: 2px solid #ffffff;
+  box-shadow: inset 1px 1px 0 #000000;
+  padding: 10px 12px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11.5px;
+  color: #00ff66;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.5;
 }
 
 @media (max-width: 480px) {
