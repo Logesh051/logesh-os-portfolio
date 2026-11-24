@@ -58,6 +58,8 @@ export const getLeaderboard = async (limit = 10): Promise<FetchResult> => {
     const { data, error } = await client
       .from('snake_scores')
       .select('id, player_name, score, created_at')
+      .not('player_name', 'ilike', '%auditbot%')
+      .not('player_name', 'ilike', '%livetester%')
       .order('score', { ascending: false })
       .order('created_at', { ascending: true })
       .limit(limit);
@@ -73,7 +75,12 @@ export const getLeaderboard = async (limit = 10): Promise<FetchResult> => {
       return { data: [], error: error.message, configured: true };
     }
 
-    return { data: (data as SnakeScore[]) || [], error: null, configured: true };
+    // Exclude test bot entries so only real players and friends are displayed
+    const cleanData = ((data as SnakeScore[]) || []).filter(
+      item => !/^(auditbot|livetester)/i.test(item.player_name.trim())
+    );
+
+    return { data: cleanData, error: null, configured: true };
   } catch (err: any) {
     console.error('Supabase getLeaderboard exception:', err);
     return { data: [], error: err.message || 'Network error', configured: true };

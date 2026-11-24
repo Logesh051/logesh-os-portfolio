@@ -821,56 +821,55 @@ export const SnakeApp: React.FC<Props> = ({
               </div>
             </div>
 
-            {/* Mobile Touch D-Pad */}
-              <div
-                className="snake-touch-controls"
-                onTouchStart={e => e.stopPropagation()}
+            {/* Mobile Touch D-Pad (Diamond / Cross Layout) */}
+            <div
+              className="snake-touch-controls"
+              onTouchStart={e => e.stopPropagation()}
+              role="group"
+              aria-label="Snake directional controls"
+            >
+              <button
+                className="snake-dpad-btn snake-dpad-btn--up"
+                onPointerDown={e => {
+                  e.preventDefault();
+                  handleTouchDirection('UP');
+                }}
+                aria-label="Up"
               >
-                <div className="snake-dpad-row">
-                  <button
-                    className="snake-dpad-btn"
-                    onPointerDown={e => {
-                      e.preventDefault();
-                      handleTouchDirection('UP');
-                    }}
-                    aria-label="Up"
-                  >
-                    ▲
-                  </button>
-                </div>
-                <div className="snake-dpad-row">
-                  <button
-                    className="snake-dpad-btn"
-                    onPointerDown={e => {
-                      e.preventDefault();
-                      handleTouchDirection('LEFT');
-                    }}
-                    aria-label="Left"
-                  >
-                    ◀
-                  </button>
-                  <button
-                    className="snake-dpad-btn"
-                    onPointerDown={e => {
-                      e.preventDefault();
-                      handleTouchDirection('DOWN');
-                    }}
-                    aria-label="Down"
-                  >
-                    ▼
-                  </button>
-                  <button
-                    className="snake-dpad-btn"
-                    onPointerDown={e => {
-                      e.preventDefault();
-                      handleTouchDirection('RIGHT');
-                    }}
-                    aria-label="Right"
-                  >
-                    ▶
-                  </button>
-                </div>
-              </div>
+                ▲
+              </button>
+              <button
+                className="snake-dpad-btn snake-dpad-btn--left"
+                onPointerDown={e => {
+                  e.preventDefault();
+                  handleTouchDirection('LEFT');
+                }}
+                aria-label="Left"
+              >
+                ◀
+              </button>
+              <div className="snake-dpad-center" aria-hidden="true" />
+              <button
+                className="snake-dpad-btn snake-dpad-btn--right"
+                onPointerDown={e => {
+                  e.preventDefault();
+                  handleTouchDirection('RIGHT');
+                }}
+                aria-label="Right"
+              >
+                ▶
+              </button>
+              <button
+                className="snake-dpad-btn snake-dpad-btn--down"
+                onPointerDown={e => {
+                  e.preventDefault();
+                  handleTouchDirection('DOWN');
+                }}
+                aria-label="Down"
+              >
+                ▼
+              </button>
+            </div>
             </>
           ) : (
             /* Leaderboard Panel */

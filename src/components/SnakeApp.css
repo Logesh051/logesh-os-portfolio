@@ -428,25 +428,22 @@
   min-height: 14px;
 }
 
-/* 6. Mobile Touch Controls (D-Pad) */
+/* 6. Mobile Touch Controls (Diamond D-Pad) */
 .snake-touch-controls {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 46px 46px 46px;
+  grid-template-rows: 40px 40px 40px;
+  gap: 6px;
+  justify-content: center;
   align-items: center;
-  gap: 4px;
-  margin-top: 6px;
+  margin: 10px auto 4px auto;
   touch-action: manipulation;
   user-select: none;
 }
 
-.snake-dpad-row {
-  display: flex;
-  gap: 6px;
-}
-
 .snake-dpad-btn {
-  width: 44px;
-  height: 38px;
+  width: 100%;
+  height: 100%;
   background: #c0c0c0;
   border-top: 2px solid #ffffff;
   border-left: 2px solid #ffffff;
@@ -469,6 +466,51 @@
   border-bottom: 2px solid #ffffff;
   border-right: 2px solid #ffffff;
   padding: 2px 0 0 2px;
+}
+
+.snake-dpad-btn--up {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.snake-dpad-btn--left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.snake-dpad-center {
+  grid-column: 2;
+  grid-row: 2;
+  width: 100%;
+  height: 100%;
+  background: #c0c0c0;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.snake-dpad-center::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #808080;
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+
+.snake-dpad-btn--right {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.snake-dpad-btn--down {
+  grid-column: 2;
+  grid-row: 3;
 }
 
 /* 7. Leaderboard Tab Content */
