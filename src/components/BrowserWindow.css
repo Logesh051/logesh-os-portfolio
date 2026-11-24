@@ -495,7 +495,16 @@
 
 @media (max-width: 600px) {
   .browser-window--normal {
+    width: calc(100vw - 8px) !important;
     max-width: calc(100vw - 8px) !important;
+    height: calc(100vh - 36px) !important;
+    max-height: calc(100vh - 36px) !important;
+    left: 4px !important;
+    top: 4px !important;
+  }
+
+  .win-resize-handle {
+    display: none !important;
   }
 }
 
